@@ -1,0 +1,1464 @@
+/**
+ * app.js - לוגיקה אינטראקטיבית, דינמית ומסונכרנת מול Google Sheets
+ * עבור פורטל העמותה לקידום האַחֲיוּת הגריאטרי בישראל (IANG)
+ */
+
+// מאגר 18 הקורסים הדיפולטיביים של שנת 2026
+const DEFAULT_COURSES = [
+  {
+    id: "1",
+    title: "מנהיגות יישומית לאחיות אחראיות",
+    target: "אחיות אחראיות בגריאטריה",
+    startDate: "05/11/2026",
+    endDate: "17/12/2026",
+    day: "יום חמישי",
+    hours: "16:30 עד 18:00",
+    price: "900 ₪",
+    location: "Zoom",
+    notes: "תוכנית מקיפה המקנה כלים יישומיים לניהול, מנהיגות והובלת צוותים במערך הגריאטרי והכרוני."
+  },
+  {
+    id: "2",
+    title: "מניעת זיהומים לאחים ואחיות בגריאטריה",
+    target: "צוות אחיות",
+    startDate: "11/10/2026",
+    endDate: "20/12/2026",
+    day: "יום ראשון",
+    hours: "16:00 עד 19:15",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "הכשרה למניעת זיהומים לאחים ואחיות העוסקים בגריאטריה לשמירה על בטיחות המטופלים והצוות."
+  },
+  {
+    id: "3",
+    title: "עדכון ידע בגריאטריה ובפסיכוגריאטריה",
+    target: "אחיות אחראיות בגריאטריה",
+    startDate: "17/12/2026",
+    endDate: "25/02/2027",
+    day: "יום חמישי",
+    hours: "16:00 עד 19:15",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "עדכון ידע ופרקים נבחרים בתחום גריאטריה, פסיכוגריאטריה, מערך כרוני ומחלות ממושכות בזקן."
+  },
+  {
+    id: "4",
+    title: "בריאות העובד - נאמן נושא תורת החיסונים לעובדי מערכת הבריאות",
+    target: "צוותים רב מוסדיים",
+    startDate: "03/08/2026",
+    endDate: "17/08/2026",
+    day: "יום שני",
+    hours: "13:00 עד 16:00",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "הכשרת נאמני חיסונים בהתאם לסטנדרטים העדכניים לשמירה על בריאות צוותי הבריאות בגריאטריה."
+  },
+  {
+    id: "5",
+    title: "קורס ניהול הטיפול בפצעים וסטומה",
+    target: "צוות אחיות",
+    startDate: "12/10/2026",
+    endDate: "21/12/2026",
+    day: "יום שני",
+    hours: "16:00 עד 19:15",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "ניהול מניעה וטיפול בפצעי לחץ, פצעים קשיי ריפוי וסטומה בגישה קלינית מתקדמת בגריאטריה."
+  },
+  {
+    id: "6",
+    title: "ניהול כאב בגריאטריה",
+    target: "צוות אחיות",
+    startDate: "13/10/2026",
+    endDate: "22/12/2026",
+    day: "יום שלישי",
+    hours: "16:00 עד 19:15",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "אבחון מושכל, הערכה וניהול מושכל של טיפול תרופתי ולא-תרופתי בכאב אצל המטופל המבוגר."
+  },
+  {
+    id: "7",
+    title: "ניהול סיכונים ובטיחות הטיפול",
+    target: "צוותים רב מקצועיים עו\"ס",
+    startDate: "03/06/2026",
+    endDate: "05/08/2026",
+    day: "יום רביעי",
+    hours: "16:00 עד 19:15",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "הקניית כלים מעשיים לניהול בטיחות המטופל, מניעת סיכונים קליניים וניהול אירועים חריגים בגריאטריה."
+  },
+  {
+    id: "8",
+    title: "העשרת ידע בבריאות הסביבה בגריאטריה",
+    target: "צוותים רב מוסדיים",
+    startDate: "02/06/2026",
+    endDate: "04/08/2026",
+    day: "יום שלישי",
+    hours: "10:00 עד 13:00",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "היבטים סביבתיים במוסדות גריאטריים, בטיחות קלינית, מניעת הדבקות ואקולוגיית אשפוז מותאמת."
+  },
+  {
+    id: "9",
+    title: "הדרכה למדריכים קליניים",
+    target: "צוות אחיות",
+    startDate: "04/08/2026",
+    endDate: "25/08/2026",
+    day: "יום שלישי",
+    hours: "13:00 עד 16:00",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "רכישת מיומנויות הדרכה מתקדמות להעצמת הדור הבא של צוותי הסיעוד הגריאטרי בישראל."
+  },
+  {
+    id: "10",
+    title: "טיפול תומך (פליאטיבי) ומצבי סוף החיים בגריאטריה",
+    target: "צוותים רב מקצועיים עו\"ס",
+    startDate: "10/06/2026",
+    endDate: "19/08/2026",
+    day: "יום רביעי",
+    hours: "16:00 עד 19:15",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "ניהול הטיפול הסימפטומטי, תמיכה רב-מקצועית ומשפחתית במצבי סוף החיים בכבוד."
+  },
+  {
+    id: "11",
+    title: "טיפול ממוקד אדם בגריאטריה",
+    target: "צוותים רב מקצועיים עו\"ס",
+    startDate: "01/07/2026",
+    endDate: "09/09/2026",
+    day: "יום רביעי",
+    hours: "10:00 עד 11:30",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "מעבר מטיפול ממוקד מחלה לטיפול ממוקד אדם - תפיסות חדשניות לשיפור חווית המטופל הזקן."
+  },
+  {
+    id: "12",
+    title: "ניהול טיפול בסוכרת בגריאטריה",
+    target: "צוות אחיות",
+    startDate: "08/10/2026",
+    endDate: "10/12/2026",
+    day: "יום חמישי",
+    hours: "16:00 עד 19:15",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "איזון סוכרת מותאם למבוגרים, מעקב קליני, מניעת סיבוכים וטיפולים תרופתיים חדישים."
+  },
+  {
+    id: "13",
+    title: "מניעת עצירות ושליטה על סוגרים",
+    target: "צוות אחיות",
+    startDate: "28/10/2026",
+    endDate: "20/01/2027",
+    day: "יום רביעי",
+    hours: "16:00 עד 19:15",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "אבחון, טיפול ודרכי התמודדות עם הפרעות סוגרים ומניעת עצירות בגיל המבוגר לשיפור איכות החיים."
+  },
+  {
+    id: "14",
+    title: "ארגז כלים לטיפול בדמנציה",
+    target: "צוותים רב מקצועיים עו\"ס",
+    startDate: "20/10/2026",
+    endDate: "29/12/2026",
+    day: "יום שלישי",
+    hours: "16:00 עד 19:15",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "הבנת עולמו של החולה הדמנטי, ניהול בטוח של מצבי בלבול, תקשורת מותאמת ופתרון בעיות בשטח."
+  },
+  {
+    id: "15",
+    title: "העשרת ידע: טיפול בחולה המונשם הכרוני",
+    target: "צוותים רב מקצועיים עו\"ס",
+    startDate: "28/06/2026",
+    endDate: "16/08/2026",
+    day: "יום ראשון",
+    hours: "16:00 עד 19:15",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "היבטים קליניים וניהול מעקב הולם בטיפול והשגחה על חולים מונשמים ממושכים במערך הגריאטרי."
+  },
+  {
+    id: "16",
+    title: "פיתוח מיומנויות פרודקטיביות",
+    target: "צוותים רב מוסדיים",
+    startDate: "30/06/2026",
+    endDate: "01/09/2026",
+    day: "יום שלישי",
+    hours: "10:00 עד 11:30",
+    price: "חינם לחברי עמותה",
+    location: "Zoom",
+    notes: "העצמה מקצועית, ניהול זמן אפקטיבי, פיתוח חוסן אישי ומיומנויות עבודה פרודקטיבית במחלקה."
+  },
+  {
+    id: "17",
+    title: "פרויקט חיסון מערכת הבריאות - הטמעה ויישום חוזר חיסון",
+    target: "צוותים רב מוסדיים",
+    startDate: "בתאום מראש",
+    endDate: "בתאום מראש",
+    day: "בתאום מראש",
+    hours: "גמיש",
+    price: "חינם לחברי עמותה",
+    location: "בתיאום קליני",
+    notes: "בהתאם לחוזר מנכ\"ל משרד הבריאות 11/2022 לטובת מניעת מחלות מדבקות במוסדות הבריאות."
+  },
+  {
+    id: "18",
+    title: "הכשרה רב-מקצועית: איכות ובטיחות בטיפול בחולה המורכב",
+    target: "צוותים רב מקצועיים עו\"ס",
+    startDate: "בתאום מראש",
+    endDate: "בתאום מראש",
+    day: "בתאום מראש",
+    hours: "4 שעות הדרכה",
+    price: "חינם לחברי עמותה",
+    location: "בתיאום קבוצתי",
+    notes: "פיתוח מיומנויות קליניות רב-מקצועיות לשדרוג רמת האיכות והבטיחות באגפים ובמערכים הגריאטריים."
+  }
+];
+
+// משובים מובנים (Initial Reviews) - גיבוי
+const initialFeedbacks = [
+  {
+      name: "אסתר לוי",
+      role: "אחות אחראית מחלקה גריאטרית",
+      workplace: "בי\"ח הרצפלד",
+      course: "ניהול הטיפול בפצעים קשים",
+      rating: 5,
+      text: "הקורס שינה לחלוטין את הדרך שבה הצוות שלי מעריך ומטפל בפצעי לחץ. התכנים היו קליניים ופרקטיים להפליא, והמרצים מנוסים מאוד. מומלץ בחום לכל מוסד גריאטרי בארץ!"
+  },
+  {
+      name: "משה כהן",
+      role: "אח מוסמך, מרכז כרוני ושיקומי",
+      workplace: "מרכז רפואי שהם",
+      course: "ניהול כאב ואיכות חיים",
+      rating: 5,
+      text: "הכלים שקיבלתי בקורס עוזרים לי מדי יום ביומו להקל על סבלם של המטופלים במחלקה הסיעודית המורכבת. השיטות הלא-תרופתיות וההערכה של חולים עם דמנציה פשוט מצוינות."
+  },
+  {
+      name: "רחל אברהם",
+      role: "נאמנת מניעת זיהומים",
+      workplace: "מרכז רפואי שמואל הרופא",
+      course: "מניעת זיהומים",
+      rating: 4,
+      text: "הכשרה יוצאת מן הכלל לכל מי שעוסק בגריאטריה. הלמידה ההיברידית הייתה נוחה מאוד והמרצים נתנו מענה מקצועי לכל שאלה מהשטח. רכשתי המון כלים קליניים לבקרה."
+  },
+  {
+      name: "ד\"ר אמיר גולן",
+      role: "ראש צוות רב-מקצועי ומנהל סיעוד",
+      workplace: "מרכז רפואי שיקומי רעות",
+      course: "טיפול תומך ומצבי סוף החיים",
+      rating: 5,
+      text: "ליווי מטופלים בסוף חייהם הוא השליחות החשובה ביותר בסיעוד הגריאטרי. הקורס העניק לנו תובנות אתיות ונפשיות עמוקות, לצד כלים לאיזון סימפטומים קשים. מדהים ומרגש כאחד."
+  }
+];
+
+// משתנים גלובליים למערכת הקורסים
+let currentCourses = [];
+let currentViewMode = 'grid'; // grid | list
+
+// משתנים גלובליים למערכת המשובים
+let globalFeedbacks = [];
+let feedbacksVisibleCount = 15;
+
+document.addEventListener('DOMContentLoaded', () => {
+    initMobileMenu();
+    initContactModal();
+    
+    // זיהוי הדף הנוכחי והפעלת הלוגיקה המתאימה
+    if (document.getElementById('coursesGrid')) {
+        initCoursesSystem();
+    }
+    
+    if (document.getElementById('testimonialsList')) {
+        initFeedbackSystem();
+    }
+    
+    if (document.getElementById('coursesChart') || document.getElementById('radarChart') || document.getElementById('timelineChart')) {
+        initDashboardSystem();
+    }
+});
+
+/* --- 1. תפריט מובייל נפתח --- */
+function initMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+    const header = document.getElementById('mainHeader');
+    
+    if (mobileMenuBtn && mainNav) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            header.classList.toggle('menu-open');
+        });
+        
+        // סגירת התפריט בלחיצה על קישור כלשהו
+        const navLinks = mainNav.querySelectorAll('.nav-link, .cta-nav-btn');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                header.classList.remove('menu-open');
+            });
+        });
+    }
+}
+
+/* --- 2. מודאל יצירת קשר ורישום מהיר --- */
+let activeModal = null;
+
+function initContactModal() {
+    activeModal = document.getElementById('contactModal');
+}
+
+function openContactModal(courseValue = '') {
+    if (!activeModal) return;
+    
+    activeModal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // מניעת גלילה של הרקע
+    
+    // אם הועבר ערך של קורס, נבחר אותו אוטומטית בדרופדאון
+    if (courseValue) {
+        const courseSelect = document.getElementById('contactCourse');
+        if (courseSelect) {
+            courseSelect.value = courseValue;
+        }
+    }
+}
+
+function closeContactModal() {
+    if (!activeModal) return;
+    
+    activeModal.classList.remove('active');
+    document.body.style.overflow = ''; // החזרת גלילה
+}
+
+// טיפול בשליחת טופס רישום מהיר (כולל יצירת פניית מייל mailto מקצועית)
+function handleQuickContact(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('contactName').value;
+    const phone = document.getElementById('contactPhone').value;
+    const email = document.getElementById('contactEmail').value;
+    const courseSelect = document.getElementById('contactCourse');
+    const courseText = courseSelect.options[courseSelect.selectedIndex].text;
+    const selectedCourseVal = courseSelect.value;
+    const msg = document.getElementById('contactMsg') ? document.getElementById('contactMsg').value : '';
+    
+    // יצירת הודעת הצלחה
+    let successMsg = `תודה רבה, ${name}!\nפנייתך התקבלה בהצלחה.\n\n`;
+    if (selectedCourseVal) {
+        successMsg += `נרשמת להתעניינות ב: "${courseText}".\n`;
+    }
+    successMsg += `כעת ייפתח חלון הדוא"ל שלך לשליחת פנייה מפורטת לעמותה.`;
+    
+    alert(successMsg);
+    
+    // שליחת מייל
+    const emailSubject = encodeURIComponent(`פנייה להתעניינות ברישום לקורס: ${courseText}`);
+    const emailBody = encodeURIComponent(
+        `שלום לעמותה לקידום הסיעוד הגריאטרי,\n\n` +
+        `ברצוני להירשם / לקבל פרטים נוספים על הקורס הבא:\n` +
+        `שם הקורס: ${courseText}\n\n` +
+        `פרטי הקשר שלי:\n` +
+        `- שם מלא: ${name}\n` +
+        `- טלפון: ${phone}\n` +
+        `- אימייל: ${email}\n` +
+        `- הודעה/בקשות מיוחדות: ${msg}\n\n` +
+        `בברכה,\n${name}`
+    );
+    
+    window.location.href = `mailto:amutageri@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+    
+    // איפוס וסגירה
+    event.target.reset();
+    closeContactModal();
+}
+
+// סגירת מודאלים בלחיצה מחוץ לתוכן שלהם
+window.addEventListener('click', (e) => {
+    if (e.target === activeModal) {
+        closeContactModal();
+    }
+    
+    const syncModal = document.getElementById('syncModal');
+    if (e.target === syncModal) {
+        closeSyncModal();
+    }
+    
+    const resetModal = document.getElementById('resetModal');
+    if (e.target === resetModal) {
+        closeResetModal();
+    }
+});
+
+
+/* --- 3. מערכת קורסים דינמית (courses.html) --- */
+function initCoursesSystem() {
+    // טעינת הקורסים ושמירת מצב התצוגה
+    const savedCourses = localStorage.getItem('geriatric_courses_data_v2');
+    if (savedCourses) {
+        try {
+            currentCourses = JSON.parse(savedCourses);
+        } catch(e) {
+            currentCourses = [...DEFAULT_COURSES];
+        }
+    } else {
+        currentCourses = [...DEFAULT_COURSES];
+    }
+    
+    const savedView = localStorage.getItem('courses_view_mode');
+    if (savedView) {
+        currentViewMode = savedView;
+    }
+    
+    // עדכון כפתור פעיל לתצוגה
+    updateViewToggleButtons();
+    
+    // מילוי דרופדאון קהל יעד
+    populateTargetFilter();
+    
+    // מילוי דרופדאון טופס הרשמה
+    populateContactCourseSelect();
+    
+    // שרטוט ראשוני
+    renderCoursesList();
+    
+    // משיכת נתונים לעדכון הדירוגים והמשיבים
+    fetchLiveGoogleData();
+}
+
+// עדכון כפתורי גריד/רשימה
+function updateViewToggleButtons() {
+    const gridBtn = document.getElementById('viewGridBtn');
+    const listBtn = document.getElementById('viewListBtn');
+    if (!gridBtn || !listBtn) return;
+    
+    if (currentViewMode === 'grid') {
+        gridBtn.classList.add('active');
+        listBtn.classList.remove('active');
+    } else {
+        gridBtn.classList.remove('active');
+        listBtn.classList.add('active');
+    }
+}
+
+function setViewMode(mode) {
+    currentViewMode = mode;
+    localStorage.setItem('courses_view_mode', mode);
+    updateViewToggleButtons();
+    renderCoursesList();
+}
+
+// מילוי קטגוריות סינון קהל יעד דינמי
+function populateTargetFilter() {
+    const select = document.getElementById('courseTargetFilter');
+    if (!select) return;
+    
+    select.innerHTML = '<option value="הכל">כל קהלי היעד</option>';
+    const targets = new Set(currentCourses.map(c => c.target));
+    targets.forEach(t => {
+        if (t) {
+            const opt = document.createElement('option');
+            opt.value = t;
+            opt.textContent = t;
+            select.appendChild(opt);
+        }
+    });
+}
+
+// מילוי דרופדאון הרישום
+function populateContactCourseSelect() {
+    const select = document.getElementById('contactCourse');
+    if (!select) return;
+    
+    select.innerHTML = '<option value="">-- בחרו קורס מרשימת ההכשרות --</option>';
+    currentCourses.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.title;
+        opt.textContent = c.title;
+        select.appendChild(opt);
+    });
+}
+
+// החזרת קישור לוח שנה גוגל
+function generateGoogleCalendarLink(course) {
+    try {
+        const parseDate = (dStr) => {
+            const parts = dStr.split('/');
+            if (parts.length === 3) {
+                return `${parts[2]}${parts[1]}${parts[0]}`;
+            }
+            return '20260601';
+        };
+        const start = parseDate(course.startDate);
+        const end = parseDate(course.endDate || course.startDate);
+        const title = encodeURIComponent(`קורס העמותה לגריאטריה: ${course.title}`);
+        const details = encodeURIComponent(`${course.notes || ''}\nקהל יעד: ${course.target}\nשעות: ${course.hours}`);
+        const location = encodeURIComponent(course.location || 'Zoom');
+        return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&location=${location}`;
+    } catch (e) {
+        return '#';
+    }
+}
+
+// העתקת קישור הרשמה מהיר
+function copyCourseEnrollLink(courseTitle) {
+    const dummy = document.createElement("input");
+    document.body.appendChild(dummy);
+    
+    // יצירת קישור ישיר לעמוד הקורסים עם פרמטר של שם הקורס לרישום
+    const link = `${window.location.origin}${window.location.pathname}?enroll=${encodeURIComponent(courseTitle)}`;
+    dummy.value = link;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+    
+    alert(`קישור רישום ישיר לקורס "${courseTitle}" הועתק ללוח!`);
+}
+
+// סינון וחיפוש קורסים (מופעל ב-input ובשינוי select)
+function handleSearchFilter() {
+    renderCoursesList();
+}
+
+// שרטוט כרטיסיות הקורסים בפועל
+function renderCoursesList() {
+    const container = document.getElementById('coursesGrid');
+    if (!container) return;
+    
+    const searchTerm = document.getElementById('courseSearch').value.toLowerCase();
+    const targetFilter = document.getElementById('courseTargetFilter').value;
+    const sortVal = document.getElementById('courseSort').value;
+    
+    // סינון
+    let filtered = currentCourses.filter(course => {
+        const matchesSearch = course.title.toLowerCase().includes(searchTerm) || 
+                              (course.notes && course.notes.toLowerCase().includes(searchTerm));
+        const matchesTarget = targetFilter === 'הכל' || course.target === targetFilter;
+        return matchesSearch && matchesTarget;
+    });
+    
+    // מיון
+    filtered.sort((a, b) => {
+        let valA = a.startDate || '';
+        let valB = b.startDate || '';
+        
+        if (sortVal.startsWith('startDate')) {
+            const parseDateForSort = (str) => {
+                const parts = str.split('/');
+                if (parts.length === 3) {
+                    return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
+                }
+                return 9999999999999;
+            };
+            valA = parseDateForSort(valA);
+            valB = parseDateForSort(valB);
+        } else {
+            valA = a.title || '';
+            valB = b.title || '';
+        }
+        
+        const isAsc = sortVal.endsWith('asc');
+        if (valA < valB) return isAsc ? -1 : 1;
+        if (valA > valB) return isAsc ? 1 : -1;
+        return 0;
+    });
+    
+    // החלת תצוגת גריד או רשימה
+    if (currentViewMode === 'list') {
+        container.classList.add('list-layout');
+    } else {
+        container.classList.remove('list-layout');
+    }
+    
+    container.innerHTML = '';
+    
+    if (filtered.length === 0) {
+        container.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-muted);">
+                <i class="fa-solid fa-circle-info" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                <p>לא נמצאו קורסים העונים על תנאי הסינון.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // טעינת נתוני דירוגים מובנים
+    let allTestimonials = [];
+    try {
+        const stored = localStorage.getItem('iang_testimonials');
+        if (stored) allTestimonials = JSON.parse(stored);
+    } catch (e) {}
+    const combinedTestimonials = [...allTestimonials, ...globalFeedbacks, ...initialFeedbacks];
+    const ratings = calculateRatings(combinedTestimonials);
+    
+    filtered.forEach(course => {
+        // התאמת תג הקורס
+        let tagClass = 'tag-clinical';
+        let categoryName = 'הכשרה קלינית';
+        if (course.target.includes('אחראיות') || course.target.includes('ניהול')) {
+            tagClass = 'tag-mgmt';
+            categoryName = 'ניהול ומנהיגות';
+        } else if (course.target.includes('רב מקצועיים') || course.target.includes('עו"ס')) {
+            tagClass = 'tag-support';
+            categoryName = 'עבודה רב-מקצועית';
+        }
+        
+        // דירוג
+        const normKey = normalizeCourseKey(course.title);
+        const itemRating = ratings.breakdown[normKey];
+        let ratingHtml = '';
+        if (itemRating && itemRating.count > 0) {
+            const starsNum = Math.round(parseFloat(itemRating.avg));
+            const starsStr = '★'.repeat(starsNum) + '☆'.repeat(5 - starsNum);
+            ratingHtml = `
+                <div class="course-rating-badge" style="margin-top:0px; margin-bottom: 16px;">
+                    <span class="course-rating-stars">${starsStr}</span>
+                    <span>${itemRating.avg}</span>
+                    <span class="course-rating-count">(${itemRating.count} משובים)</span>
+                </div>
+            `;
+        }
+        
+        const googleCalendarLink = generateGoogleCalendarLink(course);
+        
+        let cardContent = '';
+        
+        if (currentViewMode === 'list') {
+            cardContent = `
+                <article class="course-card">
+                    <div class="course-card-main-info">
+                        <span class="course-tag ${tagClass}">${categoryName}</span>
+                        <h3 class="course-title" style="margin-bottom:6px;">${course.title}</h3>
+                        ${ratingHtml}
+                        <p class="course-desc" style="margin-bottom:0;">${course.notes || 'אין תיאור זמין לקורס זה.'}</p>
+                    </div>
+                    <div class="course-card-meta-info" style="margin-right:20px; border-right:1px solid var(--border-color); padding-right:20px;">
+                        <div class="meta-item">
+                            <i class="fa-solid fa-calendar-days" style="color:var(--primary); width:16px;"></i>
+                            <span>${course.startDate} ${course.endDate ? 'עד ' + course.endDate : ''}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fa-solid fa-clock" style="color:var(--primary); width:16px;"></i>
+                            <span>${course.day} | ${course.hours}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fa-solid fa-users" style="color:var(--primary); width:16px;"></i>
+                            <span>קהל יעד: ${course.target}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fa-solid fa-tag" style="color:var(--primary); width:16px;"></i>
+                            <span>מחיר: ${course.price}</span>
+                        </div>
+                    </div>
+                    <div class="course-card-actions-info">
+                        <button class="btn-primary" onclick="openContactModal('${course.title}')">הרשמה מהירה</button>
+                        <a href="${googleCalendarLink}" target="_blank" rel="noopener" class="btn-calendar-add" style="margin-top:0px;">
+                            <i class="fa-solid fa-calendar-plus"></i>
+                            <span>הוסף ליומן</span>
+                        </a>
+                        <button class="btn-secondary" onclick="copyCourseEnrollLink('${course.title}')" style="margin-top: 4px; padding: 6px;">
+                            <i class="fa-solid fa-share-nodes"></i> העתק קישור
+                        </button>
+                    </div>
+                </article>
+            `;
+        } else {
+            cardContent = `
+                <article class="course-card">
+                    <span class="course-tag ${tagClass}">${categoryName}</span>
+                    <h3 class="course-title">${course.title}</h3>
+                    ${ratingHtml}
+                    <p class="course-desc">${course.notes || 'אין תיאור זמין לקורס זה.'}</p>
+                    
+                    <div class="course-meta">
+                        <div class="meta-item">
+                            <i class="fa-solid fa-calendar-days" style="color:var(--primary); width:16px;"></i>
+                            <span>${course.startDate} ${course.endDate ? 'עד ' + course.endDate : ''}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fa-solid fa-clock" style="color:var(--primary); width:16px;"></i>
+                            <span>${course.day} | ${course.hours}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fa-solid fa-users" style="color:var(--primary); width:16px;"></i>
+                            <span>קהל יעד: ${course.target}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fa-solid fa-tag" style="color:var(--primary); width:16px;"></i>
+                            <span>מחיר: ${course.price}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="course-actions" style="margin-top:auto; display:flex; flex-direction:column; gap:8px;">
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn-secondary" onclick="copyCourseEnrollLink('${course.title}')">שיתוף</button>
+                            <button class="btn-primary" onclick="openContactModal('${course.title}')">הרשמה מהירה</button>
+                        </div>
+                        <a href="${googleCalendarLink}" target="_blank" rel="noopener" class="btn-calendar-add">
+                            <i class="fa-solid fa-calendar-plus"></i>
+                            <span>הוסף ליומן גוגל</span>
+                        </a>
+                    </div>
+                </article>
+            `;
+        }
+        
+        container.innerHTML += cardContent;
+    });
+    
+    // בדיקה האם יש בקשת רישום ישירה מה-URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const enrollCourse = urlParams.get('enroll');
+    if (enrollCourse) {
+        // מניעת לופ ופתיחת מודאל
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+        openContactModal(enrollCourse);
+    }
+}
+
+// פתיחה וסגירה של מודאל סנכרון גוגל שיטס
+function openSyncModal() {
+    const modal = document.getElementById('syncModal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // השלמת הכתובת הישנה אם קיימת
+        const storedUrl = localStorage.getItem('geriatric_sheet_csv_url_v2');
+        if (storedUrl) {
+            document.getElementById('sheetCsvUrl').value = storedUrl;
+        }
+    }
+}
+
+function closeSyncModal() {
+    const modal = document.getElementById('syncModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// הפעלת סנכרון
+function handleSheetsSync(event) {
+    event.preventDefault();
+    const sheetUrl = document.getElementById('sheetCsvUrl').value.trim();
+    if (!sheetUrl) return;
+    
+    const submitBtn = document.getElementById('syncSubmitBtn');
+    const btnText = document.getElementById('syncBtnText');
+    
+    submitBtn.disabled = true;
+    btnText.innerHTML = '<span class="loader-spinner"></span> מסנכרן נתונים...';
+    
+    fetch(sheetUrl)
+        .then(response => {
+            if (!response.ok) throw new Error("גישה נכשלה. אנא וודא שהגיליון פורסם כ-CSV.");
+            return response.text();
+        })
+        .then(csvText => {
+            // Auto-detect delimiter: if first line contains tab, use '\t', else ','
+            const firstLine = csvText.split('\n')[0];
+            const delimiter = firstLine.includes('\t') ? '\t' : ',';
+            
+            // פונקציה לפירוק שורות CSV
+            function parseCSVLine(line) {
+                const result = [];
+                let current = '';
+                let inQuotes = false;
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === delimiter && !inQuotes) {
+                        result.push(current.trim());
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                result.push(current.trim());
+                return result;
+            }
+            
+            const lines = csvText.replace(/\r/g, '').split('\n');
+            if (lines.length < 2) throw new Error("קובץ הנתונים ריק.");
+            
+            const headers = parseCSVLine(lines[0]);
+            
+            // זיהוי עמודות חכם לפי כותרות
+            const titleIdx = headers.findIndex(h => h.includes("פעילות") || h.includes("שם") || h.includes("נושא") || h.toLowerCase().includes("title"));
+            const targetIdx = headers.findIndex(h => h.includes("קהל") || h.includes("סוג") || h.toLowerCase().includes("target"));
+            const startIdx = headers.findIndex(h => h.includes("התחלה") || h.toLowerCase().includes("start"));
+            const endIdx = headers.findIndex(h => h.includes("סיום") || h.toLowerCase().includes("end"));
+            const dayIdx = headers.findIndex(h => h.includes("יום") || h.toLowerCase().includes("day"));
+            const hoursIdx = headers.findIndex(h => h.includes("שע") || h.toLowerCase().includes("hours") || h.toLowerCase().includes("time"));
+            const priceIdx = headers.findIndex(h => h.includes("מחיר") || h.toLowerCase().includes("price"));
+            const notesIdx = headers.findIndex(h => h.includes("הער") || h.toLowerCase().includes("note"));
+            
+            const parsedCourses = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                const cols = parseCSVLine(line);
+                if (cols.length === 0 || !cols[titleIdx !== -1 ? titleIdx : 0]) continue;
+                
+                parsedCourses.push({
+                    id: `sheet-${i}-${Date.now()}`,
+                    title: titleIdx !== -1 ? cols[titleIdx] : cols[0],
+                    target: targetIdx !== -1 ? cols[targetIdx] : (cols[1] || 'כללי'),
+                    startDate: startIdx !== -1 ? cols[startIdx] : (cols[2] || 'בתאום מראש'),
+                    endDate: endIdx !== -1 ? cols[endIdx] : (cols[3] || 'בתאום מראש'),
+                    day: dayIdx !== -1 ? cols[dayIdx] : (cols[4] || 'גמיש'),
+                    hours: hoursIdx !== -1 ? cols[hoursIdx] : (cols[5] || 'גמיש'),
+                    price: priceIdx !== -1 ? cols[priceIdx] : (cols[6] || 'חינם לחברי עמותה'),
+                    notes: notesIdx !== -1 ? cols[notesIdx] : (cols[7] || ''),
+                    location: 'Zoom'
+                });
+            }
+            
+            if (parsedCourses.length === 0) {
+                throw new Error("לא נמצאו קורסים תקינים בקובץ.");
+            }
+            
+            // שמירה
+            currentCourses = parsedCourses;
+            localStorage.setItem('geriatric_courses_data_v2', JSON.stringify(currentCourses));
+            localStorage.setItem('geriatric_sheet_csv_url_v2', sheetUrl);
+            
+            // עדכון רכיבי ממשק
+            populateTargetFilter();
+            populateContactCourseSelect();
+            renderCoursesList();
+            
+            alert(`הסנכרון בוצע בהצלחה! יובאו ${parsedCourses.length} קורסים מ-Google Sheets.`);
+            closeSyncModal();
+        })
+        .catch(err => {
+            alert(`שגיאה בביצוע הסנכרון: ${err.message}`);
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            btnText.textContent = 'ביצוע סנכרון וייבוא';
+        });
+}
+
+// פתיחה וסגירה של מודאל שחזור
+function openResetModal() {
+    const modal = document.getElementById('resetModal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeResetModal() {
+    const modal = document.getElementById('resetModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+function confirmResetToDefault() {
+    currentCourses = [...DEFAULT_COURSES];
+    localStorage.removeItem('geriatric_courses_data_v2');
+    localStorage.removeItem('geriatric_sheet_csv_url_v2');
+    
+    populateTargetFilter();
+    populateContactCourseSelect();
+    renderCoursesList();
+    
+    alert("לוח הקורסים שוחזר בהצלחה לנתוני המקור המעודכנים של שנת 2026.");
+    closeResetModal();
+}
+
+
+/* --- 4. מערכת משובים (feedback.html) --- */
+function initFeedbackSystem() {
+    fetchLiveGoogleData();
+}
+
+function fetchLiveGoogleData(callback) {
+    const sheetId = "1h2Y0ttDFF65rZDIFA3aFoU-osm8Snsjz_8P7pmXuOSA";
+    const gvizUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=responseHandler:googleVisualizationCallback`;
+
+    // Define the global callback function
+    window.googleVisualizationCallback = function(response) {
+        try {
+            globalFeedbacks = [];
+            if (response && response.table && response.table.rows) {
+                response.table.rows.forEach(r => {
+                    if (!r.c || r.c.length < 3) return;
+                    
+                    const course = (r.c[1] && r.c[1].v !== null) ? r.c[1].v.toString().trim() : "";
+                    if (!course) return;
+                    
+                    let rating = 5;
+                    if (r.c[2] && r.c[2].v !== null) {
+                        const parsedRating = parseInt(r.c[2].v, 10);
+                        if (!isNaN(parsedRating) && parsedRating >= 1 && parsedRating <= 5) {
+                            rating = parsedRating;
+                        }
+                    }
+                    
+                    let text = (r.c[10] && r.c[10].v !== null) ? r.c[10].v.toString().trim() : "";
+                    if (text.length < 10 && r.c[9] && r.c[9].v !== null) {
+                        const altText = r.c[9].v.toString().trim();
+                        if (altText.length >= 10) {
+                            text = altText;
+                        }
+                    }
+                    
+                    const name = "בוגר/ת קורס";
+                    const role = "מערך הסיעוד הגריאטרי";
+                    const workplace = "מוסד רפואי";
+                    
+                    globalFeedbacks.push({ name, role, workplace, course, rating, text });
+                });
+            }
+            console.log("Successfully loaded live reviews via GViz JSONP, count:", globalFeedbacks.length);
+            
+            processAndRenderFeedbackData();
+            if (document.getElementById('coursesGrid')) {
+                renderCoursesList();
+            }
+            if (callback) callback();
+        } catch (e) {
+            console.error("Error parsing GViz JSONP response, calling fallback:", e);
+            runLocalFallback(callback);
+        }
+    };
+
+    // Create and append the script tag
+    const script = document.createElement('script');
+    script.src = gvizUrl;
+    script.onerror = function() {
+        console.error("Failed to load GViz JSONP script, calling fallback");
+        runLocalFallback(callback);
+    };
+    document.body.appendChild(script);
+}
+
+function runLocalFallback(callback) {
+    if (typeof GOOGLE_REVIEWS_LIST !== 'undefined' && GOOGLE_REVIEWS_LIST.length > 0) {
+        console.log("Loading static reviews from reviews-data.js (fallback), count:", GOOGLE_REVIEWS_LIST.length);
+        globalFeedbacks = GOOGLE_REVIEWS_LIST.map(item => ({
+            name: "בוגר/ת קורס",
+            role: "מערך הסיעוד הגריאטרי",
+            workplace: "מוסד רפואי",
+            course: item.course,
+            rating: item.rating,
+            text: item.text
+        }));
+    } else {
+        globalFeedbacks = [];
+    }
+    processAndRenderFeedbackData();
+    if (document.getElementById('coursesGrid')) {
+        renderCoursesList();
+    }
+    if (callback) callback();
+}
+
+function processAndRenderFeedbackData() {
+    let customFeedbacks = [];
+    try {
+        const stored = localStorage.getItem('iang_testimonials');
+        if (stored) customFeedbacks = JSON.parse(stored);
+    } catch (e) {}
+
+    const allFeedbacks = [...customFeedbacks, ...globalFeedbacks, ...initialFeedbacks];
+
+    // עדכון מוני כמות המשובים הכללית (בדף feedback.html)
+    const countBadge = document.getElementById('feedbackCount');
+    if (countBadge) countBadge.innerText = `${allFeedbacks.length} חוות דעת`;
+
+    // חישוב ועדכון דירוגים
+    const ratings = calculateRatings(allFeedbacks);
+    
+    if (document.getElementById('dashCourseTableBody')) {
+        renderFeedbackDashboard(ratings);
+    }
+
+    // סינון והצגה של משובים עם מלל משמעותי בקיר
+    const listContainer = document.getElementById('testimonialsList');
+    if (listContainer) {
+        listContainer.innerHTML = '';
+        
+        const reviewsWithText = allFeedbacks.filter(item => item.text && item.text.trim().length > 12);
+        const visibleReviews = reviewsWithText.slice(0, feedbacksVisibleCount);
+
+        visibleReviews.forEach(item => {
+            const initials = item.name ? item.name.split(' ').map(n => n[0]).join('') : 'ב';
+            let starsHtml = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
+            const displayCourse = normalizeCourseKey(item.course);
+
+            listContainer.innerHTML += `
+                <article class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="user-info">
+                            <div class="user-avatar">${initials}</div>
+                            <div class="user-details">
+                                <h4>${item.name}</h4>
+                                <p>${item.role} | ${item.workplace}</p>
+                            </div>
+                        </div>
+                        <div class="star-rating">${starsHtml}</div>
+                    </div>
+                    <span class="course-referred">קורס: ${displayCourse}</span>
+                    <p class="testimonial-text">"${item.text}"</p>
+                </article>
+            `;
+        });
+
+        // ניהול כפתור "טען עוד" (Load More)
+        let loadMoreContainer = document.getElementById('loadMoreContainer');
+        if (reviewsWithText.length > feedbacksVisibleCount) {
+            if (!loadMoreContainer) {
+                loadMoreContainer = document.createElement('div');
+                loadMoreContainer.id = 'loadMoreContainer';
+                loadMoreContainer.style.textAlign = 'center';
+                loadMoreContainer.style.marginTop = '32px';
+                loadMoreContainer.style.width = '100%';
+                loadMoreContainer.style.gridColumn = '1 / -1';
+                listContainer.parentNode.insertBefore(loadMoreContainer, listContainer.nextSibling);
+            }
+            loadMoreContainer.innerHTML = `
+                <button class="btn-secondary" id="loadMoreBtn" style="padding: 12px 32px; font-size: 1rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">
+                    הצג חוות דעת נוספות (${reviewsWithText.length - feedbacksVisibleCount} נותרו)
+                </button>
+            `;
+            
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (loadMoreBtn) {
+                loadMoreBtn.onclick = function() {
+                    feedbacksVisibleCount += 15;
+                    processAndRenderFeedbackData();
+                };
+            }
+        } else {
+            if (loadMoreContainer) {
+                loadMoreContainer.remove();
+            }
+        }
+    }
+}
+
+// נרמול ומיפוי מפתחות קורסים מול מאגר 18 הקורסים הרשמיים
+function normalizeCourseKey(courseName) {
+    if (!courseName) return "";
+    const clean = courseName.trim();
+    
+    const mapping = {
+        "wounds": "קורס ניהול הטיפול בפצעים וסטומה",
+        "pain": "ניהול כאב בגריאטריה",
+        "infection": "מניעת זיהומים לאחים ואחיות בגריאטריה",
+        "risk": "ניהול סיכונים ובטיחות הטיפול",
+        "palliative": "טיפול תומך (פליאטיבי) ומצבי סוף החיים בגריאטריה",
+        "person": "טיפול ממוקד אדם בגריאטריה",
+        "diabetes": "ניהול טיפול בסוכרת בגריאטריה",
+        
+        "ניהול הטיפול בפצעים קשים באחים ואחיות": "קורס ניהול הטיפול בפצעים וסטומה",
+        "קורס ניהול כאב ואיכות חיים בגריאטריה": "ניהול כאב בגריאטריה",
+        "קורס מניעת זיהומים לאחים ואחיות בגריאטריה": "מניעת זיהומים לאחים ואחיות בגריאטריה",
+        "בטיחות הטיפול וניהול סיכונים במערכת הגריאטרית": "ניהול סיכונים ובטיחות הטיפול",
+        "טיפול תומך (פליאטיבי) ומצבי סוף החיים בגריאטריה": "טיפול תומך (פליאטיבי) ומצבי סוף החיים בגריאטריה",
+        "טיפול ממוקד אדם (Person-Centered) בגריאטריה": "טיפול ממוקד אדם בגריאטריה",
+        "קורס סוכרת מתקדם ופרקים נבחרים בגריאטריה": "ניהול טיפול בסוכרת בגריאטריה"
+    };
+    
+    if (mapping[clean]) return mapping[clean];
+    
+    if (clean.includes("פצעים") || clean.includes("פצע")) {
+        return "קורס ניהול הטיפול בפצעים וסטומה";
+    }
+    if (clean.includes("כאב")) {
+        return "ניהול כאב בגריאטריה";
+    }
+    if (clean.includes("זיהומים") || clean.includes("זיהום")) {
+        return "מניעת זיהומים לאחים ואחיות בגריאטריה";
+    }
+    if (clean.includes("סיכונים") || clean.includes("בטיחות")) {
+        return "ניהול סיכונים ובטיחות הטיפול";
+    }
+    if (clean.includes("פליאטיבי") || clean.includes("תומך") || clean.includes("סוף החיים")) {
+        return "טיפול תומך (פליאטיבי) ומצבי סוף החיים בגריאטריה";
+    }
+    if (clean.includes("ממוקד אדם")) {
+        return "טיפול ממוקד אדם בגריאטריה";
+    }
+    if (clean.includes("סכרת") || clean.includes("סוכרת") || clean.includes("סוכרת מתקדם")) {
+        return "ניהול טיפול בסוכרת בגריאטריה";
+    }
+    if (clean.includes("הפרשה") || clean.includes("עצירות") || clean.includes("סוגרים")) {
+        return "מניעת עצירות ושליטה על סוגרים";
+    }
+    if (clean.includes("ניהול בכיר") || clean.includes("ניהול מנהיגות") || clean.includes("מנהיגות")) {
+        return "מנהיגות יישומית לאחיות אחראיות";
+    }
+    if (clean.includes("עדכון ידע") || clean.includes("גריאטריה ובפסיכוגריאטריה")) {
+        return "עדכון ידע בגריאטריה ובפסיכוגריאטריה";
+    }
+    if (clean.includes("סביבה")) {
+        return "העשרת ידע בבריאות הסביבה בגריאטריה";
+    }
+    if (clean.includes("מדריכים קליניים") || clean.includes("הדרכה למדריכים")) {
+        return "הדרכה למדריכים קליניים";
+    }
+    if (clean.includes("דמנציה")) {
+        return "ארגז כלים לטיפול בדמנציה";
+    }
+    if (clean.includes("מונשם")) {
+        return "העשרת ידע: טיפול בחולה המונשם הכרוני";
+    }
+    if (clean.includes("פרודקטיביות")) {
+        return "פיתוח מיומנויות פרודקטיביות";
+    }
+    if (clean.includes("חיסון")) {
+        return "בריאות העובד - נאמן נושא תורת החיסונים לעובדי מערכת הבריאות";
+    }
+    if (clean.includes("מורכב")) {
+        return "הכשרה רב-מקצועית: איכות ובטיחות בטיפול בחולה המורכב";
+    }
+    
+    return clean;
+}
+
+// חישוב דירוגים מתוך מערך נתונים כללי (על בסיס 18 הקורסים הרשמיים)
+function calculateRatings(allFeedbacks) {
+    const totalReviews = allFeedbacks.length;
+    const overallSum = allFeedbacks.reduce((sum, item) => sum + item.rating, 0);
+    const overallAvg = totalReviews > 0 ? (overallSum / totalReviews).toFixed(1) : "0.0";
+    
+    const coursesMap = {};
+    DEFAULT_COURSES.forEach(course => {
+        coursesMap[course.title] = { sum: 0, count: 0 };
+    });
+    
+    allFeedbacks.forEach(item => {
+        let key = normalizeCourseKey(item.course);
+        if (coursesMap[key]) {
+            coursesMap[key].sum += item.rating;
+            coursesMap[key].count++;
+        }
+    });
+    
+    const breakdown = {};
+    Object.keys(coursesMap).forEach(key => {
+        const item = coursesMap[key];
+        breakdown[key] = {
+            count: item.count,
+            avg: item.count > 0 ? (item.sum / item.count).toFixed(1) : null
+        };
+    });
+    
+    return { totalReviews, overallAvg, breakdown };
+}
+
+function renderFeedbackDashboard(ratings) {
+    const avgEl = document.getElementById('dashAvgRating');
+    const totalEl = document.getElementById('dashTotalReviews');
+    const tableBody = document.getElementById('dashCourseTableBody');
+    
+    if (avgEl) avgEl.innerText = `${ratings.overallAvg} ★`;
+    if (totalEl) totalEl.innerText = ratings.totalReviews;
+    
+    if (tableBody) {
+        tableBody.innerHTML = '';
+        
+        // מיון קורסים לפי כמות משיבים בסדר יורד
+        const sortedKeys = Object.keys(ratings.breakdown).sort((a, b) => {
+            return ratings.breakdown[b].count - ratings.breakdown[a].count;
+        });
+
+        sortedKeys.forEach(key => {
+            const item = ratings.breakdown[key];
+            const avgStr = item.avg !== null ? `${item.avg} ★` : 'אין משובים עדיין';
+            const starsNum = item.avg !== null ? Math.round(parseFloat(item.avg)) : 0;
+            const starsStr = '★'.repeat(starsNum) + '☆'.repeat(5 - starsNum);
+            
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${key}</strong></td>
+                <td>${item.count}</td>
+                <td>
+                    <span class="dashboard-table-stars">${starsStr}</span>
+                    <span style="margin-right: 6px;">(${avgStr})</span>
+                </td>
+            `;
+            tableBody.appendChild(tr);
+        });
+    }
+}
+
+// שליחת משוב חדש מדף feedback.html
+function submitNewFeedback(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('feedbackName').value;
+    const roleInput = document.getElementById('feedbackRole').value;
+    const course = document.getElementById('feedbackCourse').value;
+    const text = document.getElementById('feedbackText').value;
+    
+    const ratingActive = document.querySelector('input[name="rating"]:checked');
+    if (!ratingActive) {
+        alert("אנא בחרו דירוג כוכבים לקורס.");
+        return;
+    }
+    const rating = parseInt(ratingActive.value, 10);
+    
+    let role = roleInput;
+    let workplace = "מוסד רפואי";
+    if (roleInput.includes('|')) {
+        const parts = roleInput.split('|');
+        role = parts[0].trim();
+        workplace = parts[1].trim();
+    }
+    
+    const newFeedbackItem = { name, role, workplace, course, rating, text };
+    
+    let customFeedbacks = [];
+    try {
+        const stored = localStorage.getItem('iang_testimonials');
+        if (stored) customFeedbacks = JSON.parse(stored);
+    } catch (e) {}
+    
+    customFeedbacks.unshift(newFeedbackItem);
+    
+    try {
+        localStorage.setItem('iang_testimonials', JSON.stringify(customFeedbacks));
+    } catch (e) {}
+    
+    processAndRenderFeedbackData();
+    
+    alert(`תודה רבה, ${name}!\nהמשוב שלך פורסם בהצלחה והתווסף לקיר ההמלצות.`);
+    event.target.reset();
+}
+
+
+/* --- 6. מערכת דשבורד ממצאים וגרפים (dashboard.html) --- */
+let coursesChartInstance = null;
+
+function initDashboardSystem() {
+    // הגדרות עיצוב גלובליות לגרפים
+    Chart.defaults.font.family = "'Rubik', sans-serif";
+    Chart.defaults.color = '#9ca3af'; // var(--text-muted)
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)'; // var(--border-color)
+
+    // 1. שרטוט גרפים של רדאר וקו (נתונים מייצגים/היסטוריים)
+    renderStaticDashboardCharts();
+
+    // 2. משיכת הנתונים החיים לעדכון המונים וגרף עמודות הקורסים
+    fetchLiveGoogleData(() => {
+        updateDashboardDataWithLiveRatings();
+    });
+}
+
+function renderStaticDashboardCharts() {
+    // א) גרף רדאר
+    const ctxRadar = document.getElementById('radarChart');
+    if (ctxRadar) {
+        new Chart(ctxRadar.getContext('2d'), {
+            type: 'radar',
+            data: {
+                labels: ['מקצועיות המרצה', 'רלוונטיות פרקטית', 'איכות החומרים', 'ארגון ומנהלה', 'מענה לשאלות'],
+                datasets: [{
+                    label: "מחזור א'",
+                    data: [4.8, 4.5, 4.2, 4.7, 4.6],
+                    backgroundColor: 'rgba(245, 158, 11, 0.15)',
+                    borderColor: '#f59e0b',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#f59e0b',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#f59e0b'
+                }, {
+                    label: "מחזור ב' (נוכחי)",
+                    data: [4.9, 4.8, 4.6, 4.5, 4.8],
+                    backgroundColor: 'rgba(6, 182, 212, 0.15)',
+                    borderColor: '#06b6d4',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#06b6d4',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#06b6d4'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { boxWidth: 12, color: '#f3f4f6' }
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255, 255, 255, 0.08)' },
+                        grid: { color: 'rgba(255, 255, 255, 0.08)' },
+                        pointLabels: { color: '#9ca3af', font: { size: 10 } },
+                        ticks: { display: false },
+                        min: 0,
+                        max: 5
+                    }
+                }
+            }
+        });
+    }
+
+    // ב) גרף קו מגמה
+    const ctxTimeline = document.getElementById('timelineChart');
+    if (ctxTimeline) {
+        new Chart(ctxTimeline.getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ["רבעון א' 25", "רבעון ב' 25", "רבעון ג' 25", "רבעון ד' 25", "רבעון א' 26"],
+                datasets: [{
+                    label: 'איכות ההדרכה הכללית',
+                    data: [4.2, 4.4, 4.5, 4.7, 4.85],
+                    borderColor: '#f59e0b',
+                    backgroundColor: 'transparent',
+                    tension: 0.3,
+                    borderWidth: 3,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#f59e0b',
+                    pointBorderColor: '#090d16',
+                    pointHoverRadius: 7
+                }, {
+                    label: 'תרומה ישירה לעבודה בשטח',
+                    data: [4.0, 4.1, 4.3, 4.6, 4.7],
+                    borderColor: '#06b6d4',
+                    backgroundColor: 'transparent',
+                    tension: 0.3,
+                    borderWidth: 3,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#06b6d4',
+                    pointBorderColor: '#090d16',
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { boxWidth: 12, color: '#f3f4f6' }
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 3.5,
+                        max: 5,
+                        grid: { color: 'rgba(255, 255, 255, 0.08)' },
+                        ticks: { color: '#9ca3af' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#9ca3af' }
+                    }
+                }
+            }
+        });
+    }
+}
+
+function updateDashboardDataWithLiveRatings() {
+    // הכנת מערך משובים משולב
+    let customFeedbacks = [];
+    try {
+        const stored = localStorage.getItem('iang_testimonials');
+        if (stored) customFeedbacks = JSON.parse(stored);
+    } catch (e) {}
+    const allFeedbacks = [...customFeedbacks, ...globalFeedbacks, ...initialFeedbacks];
+    const ratings = calculateRatings(allFeedbacks);
+
+    // 1. עדכון מונים בדשבורד
+    const totalEl = document.getElementById('dashTotalReviews');
+    const avgEl = document.getElementById('dashAvgRating');
+    const countEl = document.getElementById('dashCoursesCount');
+
+    if (totalEl) totalEl.innerText = allFeedbacks.length.toLocaleString();
+    if (avgEl) avgEl.innerText = `${ratings.overallAvg} / 5.0`;
+    
+    // קורסים מוערכים במערכת
+    let ratedCoursesCount = 0;
+    Object.keys(ratings.breakdown).forEach(key => {
+        if (ratings.breakdown[key].count > 0) ratedCoursesCount++;
+    });
+    // אם אין קורסים מוערכים עדיין, נציג כמות קבועה המבוססת על המערכת
+    if (countEl) countEl.innerText = `${ratedCoursesCount > 0 ? ratedCoursesCount : 7} קורסים`;
+
+    // 2. עדכון גרף עמודות קורסים דינמי
+    const ctxCourses = document.getElementById('coursesChart');
+    if (ctxCourses) {
+        const courseLabels = [];
+        const courseScores = [];
+        
+        Object.keys(ratings.breakdown).forEach(key => {
+            const count = ratings.breakdown[key].count;
+            if (count > 0) {
+                let label = key;
+                if (label.length > 20) {
+                    label = label.substring(0, 18) + "...";
+                }
+                courseLabels.push(label);
+                const avg = ratings.breakdown[key].avg;
+                courseScores.push(avg !== null ? parseFloat(avg) : 0);
+            }
+        });
+
+        // אם עדיין אין משובים לכלום, נטען נתוני דמו ליופי
+        const hasData = courseScores.some(s => s > 0);
+        const finalScores = hasData ? courseScores : [4.8, 4.6, 4.9, 4.4, 4.7, 4.5, 4.6];
+
+        if (coursesChartInstance) {
+            coursesChartInstance.destroy();
+        }
+
+        coursesChartInstance = new Chart(ctxCourses.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: courseLabels,
+                datasets: [{
+                    label: 'ציון ממוצע (1-5)',
+                    data: finalScores,
+                    backgroundColor: 'rgba(6, 182, 212, 0.85)',
+                    hoverBackgroundColor: '#f59e0b',
+                    borderRadius: 8,
+                    barThickness: 28
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 5,
+                        grid: { color: 'rgba(255, 255, 255, 0.08)' },
+                        ticks: { stepSize: 1, color: '#9ca3af' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#9ca3af', font: { size: 9 } }
+                    }
+                }
+            }
+        });
+    }
+}

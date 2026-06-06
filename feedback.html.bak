@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="לוח משובים וחוות דעת של בוגרי קורסי העמותה לקידום הסיעוד הגריאטרי בישראל. קראו מה אומרים אחים ואחיות מהשטח והוסיפו את חוות דעתכם האישית.">
+    <title>משובים והמלצות הבוגרים | העמותה לקידום הסיעוד הגריאטרי בישראל (IANG)</title>
+    
+    <!-- פונטים מ-Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- קובץ עיצוב ראשי -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- הידר עליון (Header) -->
+    <header class="site-header" id="mainHeader">
+        <div class="header-container">
+            <a href="index.html" class="logo-wrapper" id="logoLink">
+                <img src="logo.png" alt="לוגו העמותה לקידום הסיעוד הגריאטרי בישראל" class="logo-img">
+                <div class="logo-text">
+                    <span class="logo-title">העמותה לקידום הסיעוד הגריאטרי</span>
+                    <span class="logo-subtitle">בישראל (IANG)</span>
+                </div>
+            </a>
+            
+            <!-- תפריט ניווט -->
+            <nav class="main-nav" id="mainNav">
+                <a href="index.html" class="nav-link" id="navHome">דף הבית</a>
+                <a href="courses.html" class="nav-link" id="navCourses">פריסת קורסים</a>
+                <a href="feedback.html" class="nav-link active" id="navFeedback">משובים והמלצות</a>
+                <a href="dashboard.html" class="nav-link" id="navDashboard">דשבורד ממצאים</a>
+                <a href="https://www.iang.co.il/%D7%A8%D7%99%D7%A9%D7%95%D7%9D%D7%9C%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D" target="_blank" rel="noopener" class="cta-nav-btn">רישום באתר העמותה ↗</a>
+            </nav>
+            
+            <!-- כפתור המבורגר למובייל -->
+            <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="תפריט ניווט">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- הירו של הדף (Page Hero) -->
+    <section class="page-hero" id="feedbackHero">
+        <div class="hero-badge badge">
+            <span class="dot"></span>
+            <span>קולות מן השטח</span>
+        </div>
+        <h1 class="page-title">משובים והמלצות הבוגרים</h1>
+        <p class="hero-description" style="max-width: 650px;">
+            אחים ואחיות משתפים את חוות דעתם על קורסי העמותה והשפעתם על העבודה הקלינית היומיומית.
+        </p>
+    </section>
+
+    <!-- דשבורד משובים ונתונים דינמיים -->
+    <section class="feedback-dashboard-section" id="feedbackDashboardSection">
+        <div class="feedback-dashboard">
+            <!-- כרטיסיית ממוצע דירוג כללי -->
+            <div class="dashboard-card accent-stat-card">
+                <div class="dashboard-stat-val stat-gold" id="dashAvgRating">0.0</div>
+                <div class="dashboard-stat-label">דירוג שביעות רצון ממוצע ★</div>
+            </div>
+            
+            <!-- כרטיסיית סה"כ משובים -->
+            <div class="dashboard-card">
+                <div class="dashboard-stat-val stat-cyan" id="dashTotalReviews">0</div>
+                <div class="dashboard-stat-label">סה"כ המלצות ומשובים שהתקבלו</div>
+            </div>
+            
+            <!-- כרטיסיית פילוח ממוצעים ומשובים לכל קורס -->
+            <div class="dashboard-table-card">
+                <div class="dashboard-table-title">פילוח מדדי שביעות רצון לפי קורס</div>
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>שם הקורס</th>
+                            <th>כמות משובים</th>
+                            <th>ציון ממוצע</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dashCourseTableBody">
+                        <!-- ייטען דינמית באמצעות app.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- אזור התוכן המרכזי - משובים וטופס -->
+    <main class="feedback-container" id="feedbackMain">
+        
+        <!-- קיר המשובים וההמלצות (Testimonials Wall) -->
+        <section class="testimonials-wall" id="testimonialsWall" aria-label="קיר ההמלצות">
+            <div class="wall-header">
+                <h2>המלצות מהשטח</h2>
+                <span class="feedback-count" id="feedbackCount">נטען...</span>
+            </div>
+            
+            <!-- מכולת המשובים הדינמית (כאן ייטענו משובים מובנים ומשובים מ-localStorage) -->
+            <div id="testimonialsList" class="testimonials-wall">
+                <!-- ייווצר בצורה דינמית על ידי app.js -->
+            </div>
+        </section>
+
+        <!-- טופס כתיבת משוב חדש (Testimonial Form) -->
+        <section class="feedback-form-card" id="feedbackFormCard" aria-label="טופס כתיבת משוב">
+            <h3 class="form-title">שתפו את המשוב שלכם</h3>
+            <p class="form-desc">
+                השתתפתם באחד מהקורסים או הכנסים שלנו? נשמח מאוד לשמוע את דעתכם המקצועית ולשתפה בקיר ההמלצות.
+            </p>
+            
+            <form id="newFeedbackForm" onsubmit="submitNewFeedback(event)">
+                <!-- שם מלא -->
+                <div class="form-group">
+                    <label for="feedbackName">שם מלא <span>*</span></label>
+                    <input type="text" id="feedbackName" required placeholder="ישראל ישראלי">
+                </div>
+                
+                <!-- תפקיד ומוסד -->
+                <div class="form-group">
+                    <label for="feedbackRole">תפקיד ומוסד רפואי <span>*</span></label>
+                    <input type="text" id="feedbackRole" required placeholder="אח מוסמך, בי&quot;ח שיקומי...">
+                </div>
+                
+                <!-- קורס שלקחת -->
+                <div class="form-group">
+                    <label for="feedbackCourse">הקורס שעברתם <span>*</span></label>
+                    <select id="feedbackCourse" required>
+                        <option value="">-- בחרו את הקורס שעברתם --</option>
+                        <option value="ניהול הטיפול בפצעים קשים">ניהול הטיפול בפצעים קשים באחים ואחיות</option>
+                        <option value="ניהול כאב ואיכות חיים">קורס ניהול כאב ואיכות חיים בגריאטריה</option>
+                        <option value="מניעת זיהומים">קורס מניעת זיהומים לאחים ואחיות בגריאטריה</option>
+                        <option value="בטיחות הטיפול וניהול סיכונים">בטיחות הטיפול וניהול סיכונים במערכת הגריאטרית</option>
+                        <option value="טיפול תומך ומצבי סוף החיים">טיפול תומך (פליאטיבי) ומצבי סוף החיים בגריאטריה</option>
+                        <option value="טיפול ממוקד אדם">טיפול ממוקד אדם (Person-Centered) בגריאטריה</option>
+                        <option value="סוכרת מתקדם ופרקים בגריאטריה">קורס סוכרת מתקדם ופרקים נבחרים בגריאטריה</option>
+                    </select>
+                </div>
+                
+                <!-- דירוג כוכבים אינטראקטיבי -->
+                <div class="form-group">
+                    <label>דירוג הקורס <span>*</span></label>
+                    <div class="rating-selector" id="ratingSelector">
+                        <input type="radio" id="star5" name="rating" value="5" required>
+                        <label for="star5" title="מצוין - 5 כוכבים">★</label>
+                        <input type="radio" id="star4" name="rating" value="4">
+                        <label for="star4" title="טוב מאוד - 4 כוכבים">★</label>
+                        <input type="radio" id="star3" name="rating" value="3">
+                        <label for="star3" title="טוב - 3 כוכבים">★</label>
+                        <input type="radio" id="star2" name="rating" value="2">
+                        <label for="star2" title="מספיק - 2 כוכבים">★</label>
+                        <input type="radio" id="star1" name="rating" value="1">
+                        <label for="star1" title="טעון שיפור - 1 כוכב">★</label>
+                    </div>
+                </div>
+                
+                <!-- תוכן המשוב -->
+                <div class="form-group">
+                    <label for="feedbackText">תוכן המשוב <span>*</span></label>
+                    <textarea id="feedbackText" required rows="5" placeholder="כתבו כאן את החוות הדעת המפורטת שלכם על הקורס, המרצים, הכלים שקיבלתם והתרומה לעבודתכם..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn-submit" id="submitFeedbackBtn">פרסום משוב על הקיר</button>
+            </form>
+        </section>
+        
+    </main>
+
+    <!-- מודאל יצירת קשר / רישום מהיר (Contact Modal) -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeContactModal()">&times;</button>
+            <h2 class="modal-title">רישום מהיר וייעוץ מקצועי</h2>
+            <p class="modal-desc">השאירו פרטים ונציג העמותה יחזור אליכם עם מידע על הקורסים והכנסים הקרובים.</p>
+            
+            <!-- קישור ישיר לרישום ותשלום רשמי -->
+            <div class="direct-register-box" style="background: rgba(6, 182, 212, 0.08); border: 1px solid rgba(6, 182, 212, 0.2); padding: 16px; border-radius: 12px; margin-bottom: 24px; text-align: center;">
+                <p style="font-size: 0.9rem; margin-bottom: 12px; font-weight: 600; color: var(--primary);">מעוניינים להירשם ולבצע תשלום מאובטח מיידית?</p>
+                <a href="https://www.iang.co.il/%D7%A8%D7%99%D7%A9%D7%95%D7%9D%D7%9C%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D" target="_blank" rel="noopener" class="btn-primary" style="display: inline-block; width: auto; padding: 10px 24px; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);">מעבר לטופס הרישום והתשלום הרשמי ↗</a>
+            </div>
+
+            <form id="quickContactForm" onsubmit="handleQuickContact(event)">
+                <div class="form-group">
+                    <label for="contactName">שם מלא <span>*</span></label>
+                    <input type="text" id="contactName" required placeholder="ישראל ישראלי">
+                </div>
+                <div class="form-group">
+                    <label for="contactPhone">מספר טלפון <span>*</span></label>
+                    <input type="tel" id="contactPhone" required placeholder="050-0000000">
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">כתובת אימייל <span>*</span></label>
+                    <input type="email" id="contactEmail" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="contactCourse">קורס מועדף</label>
+                    <select id="contactCourse">
+                        <option value="">-- בחרו קורס מרשימת ההכשרות --</option>
+                        <option value="wounds">ניהול הטיפול בפצעים קשים</option>
+                        <option value="pain">קורס ניהול כאב בגריאטריה</option>
+                        <option value="infection">הכשרה למניעת זיהומים</option>
+                        <option value="risk">בטיחות הטיפול וניהול סיכונים</option>
+                        <option value="palliative">טיפול תומך ומצבי סוף החיים</option>
+                        <option value="person">טיפול ממוקד אדם בגריאטריה</option>
+                        <option value="diabetes">קורס סוכרת מתקדם</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit">שליחת בקשה</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- פוטר (Footer) -->
+    <footer class="site-footer" id="siteFooter">
+        <div class="footer-container">
+            <!-- פרטי העמותה -->
+            <div class="footer-info">
+                <div class="footer-logo">
+                    <span class="footer-logo-title">העמותה לקידום הסיעוד הגריאטרי בישראל</span>
+                    <br>
+                    <span class="footer-logo-sub">מצוינות ומקצועיות בסיעוד הגיל השלישי</span>
+                </div>
+                <p class="footer-desc">
+                    העמותה משמשת כמקור המידע, הלמידה והפיתוח המקצועי המוביל לאחים ואחיות גריאטריים בישראל, ומחויבת לקידום איכות הטיפול ומעמד מקצוע הסיעוד הגריאטרי.
+                </p>
+            </div>
+            
+            <!-- ניווט מהיר -->
+            <div class="footer-links-col">
+                <h4>ניווט מהיר</h4>
+                <ul>
+                    <li><a href="index.html">דף הבית</a></li>
+                    <li><a href="courses.html">פריסת קורסים</a></li>
+                    <li><a href="feedback.html">משובים והמלצות</a></li>
+                    <li><a href="dashboard.html">דשבורד ממצאים</a></li>
+                    <li><a href="#" onclick="openContactModal(); return false;">הרשמה מהירה</a></li>
+                </ul>
+            </div>
+            
+            <!-- קורסים פופולריים -->
+            <div class="footer-links-col">
+                <h4>קורסים מובילים</h4>
+                <ul>
+                    <li><a href="courses.html?filter=clinical">ניהול טיפול בפצעים קשים</a></li>
+                    <li><a href="courses.html?filter=clinical">קורס ניהול כאב בגריאטריה</a></li>
+                    <li><a href="courses.html?filter=mgmt">מניעת זיהומים במוסדות</a></li>
+                    <li><a href="courses.html?filter=support">טיפול תומך ופליאטיבי</a></li>
+                </ul>
+            </div>
+            
+            <!-- פרטי התקשרות -->
+            <div class="footer-links-col">
+                <h4>פרטי התקשרות</h4>
+                <ul class="contact-info-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>052-5366303</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>amutageri@gmail.com</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                        <span>ישראל, מוסדות וקהילה</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- זכויות יוצרים ותחתית פוטר -->
+        <div class="footer-bottom">
+            <p>© 2026 העמותה לקידום הסיעוד הגריאטרי בישראל (IANG). כל הזכויות שמורות.</p>
+            <p>
+                <a href="#">תקנון העמותה</a> | 
+                <a href="#">הצהרת נגישות</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- קובץ נתוני גיבוי למשובים -->
+    <script src="reviews-data.js"></script>
+    <!-- קובץ לוגיקת JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>

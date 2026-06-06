@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="מפת הקורסים וההכשרות המעודכנת של העמותה לקידום הסיעוד הגריאטרי בישראל. קורסי פצעים, כאב, סוכרת, בטיחות הטיפול, מניעת זיהומים וטיפול תומך.">
+    <title>פריסת קורסים והכשרות | העמותה לקידום הסיעוד הגריאטרי בישראל (IANG)</title>
+    
+    <!-- פונטים מ-Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- קובץ עיצוב ראשי -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- הידר עליון (Header) -->
+    <header class="site-header" id="mainHeader">
+        <div class="header-container">
+            <a href="index.html" class="logo-wrapper" id="logoLink">
+                <img src="logo.png" alt="לוגו העמותה לקידום הסיעוד הגריאטרי בישראל" class="logo-img">
+                <div class="logo-text">
+                    <span class="logo-title">העמותה לקידום הסיעוד הגריאטרי</span>
+                    <span class="logo-subtitle">בישראל (IANG)</span>
+                </div>
+            </a>
+            
+            <!-- תפריט ניווט -->
+            <nav class="main-nav" id="mainNav">
+                <a href="index.html" class="nav-link" id="navHome">דף הבית</a>
+                <a href="courses.html" class="nav-link active" id="navCourses">פריסת קורסים</a>
+                <a href="feedback.html" class="nav-link" id="navFeedback">משובים והמלצות</a>
+                <a href="dashboard.html" class="nav-link" id="navDashboard">דשבורד ממצאים</a>
+                <a href="https://www.iang.co.il/%D7%A8%D7%99%D7%A9%D7%95%D7%9D%D7%9C%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D" target="_blank" rel="noopener" class="cta-nav-btn">רישום באתר העמותה ↗</a>
+            </nav>
+            
+            <!-- כפתור המבורגר למובייל -->
+            <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="תפריט ניווט">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- הירו של הדף (Page Hero) -->
+    <section class="page-hero" id="coursesHero">
+        <div class="hero-badge badge">
+            <span class="dot"></span>
+            <span>רישום להכשרות 2026</span>
+        </div>
+        <h1 class="page-title">פריסת הקורסים ומסלולי ההכשרה</h1>
+        <p class="hero-description" style="max-width: 650px;">
+            הכשרות מקצועיות מקיפות המועברות על ידי בכירי המומחים בארץ. בחרו את תחום הפיתוח שלכם והירשמו בקלות.
+        </p>
+    </section>
+
+    <!-- סרגל כלים מתקדם לקורסים (Toolbar) -->
+    <nav class="max-w-7xl mx-auto px-6" aria-label="סינון וחיפוש קורסים">
+        <div class="courses-toolbar">
+            <div class="toolbar-search-filter">
+                <!-- חיפוש חופשי -->
+                <div class="search-input-wrapper">
+                    <svg class="search-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="courseSearch" placeholder="חיפוש קורס..." oninput="handleSearchFilter()">
+                </div>
+                
+                <!-- סינון קהל יעד -->
+                <select id="courseTargetFilter" class="filter-select" onchange="handleSearchFilter()">
+                    <option value="הכל">כל קהלי היעד</option>
+                </select>
+                
+                <!-- מיון קורסים -->
+                <select id="courseSort" class="filter-select" onchange="handleSearchFilter()">
+                    <option value="startDate-asc">תאריך התחלה (מהקרוב לרחוק)</option>
+                    <option value="startDate-desc">תאריך התחלה (מהרחוק לקרוב)</option>
+                    <option value="title-asc">שם הקורס (א-ת)</option>
+                    <option value="title-desc">שם הקורס (ת-א)</option>
+                </select>
+            </div>
+            
+            <div class="toolbar-actions">
+                <!-- כפתור שינוי תצוגה -->
+                <button class="view-toggle-btn active" id="viewGridBtn" onclick="setViewMode('grid')" title="תצוגת גריד">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                </button>
+                <button class="view-toggle-btn" id="viewListBtn" onclick="setViewMode('list')" title="תצוגת רשימה">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                    </svg>
+                </button>
+                
+                <!-- כפתור סנכרון גוגל שיטס -->
+                <button class="btn-sync-sheets" onclick="openSyncModal()" title="ייבוא מ-Google Sheets">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                        <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path>
+                    </svg>
+                    <span>סנכרון Sheets</span>
+                </button>
+                
+                <!-- כפתור שחזור דיפולט -->
+                <button class="btn-reset-default" onclick="openResetModal()" title="שחזור קורסי המקור">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- סקציית גריד הקורסים -->
+    <main class="courses-section" id="coursesContainer">
+        <div class="courses-grid" id="coursesGrid">
+            <!-- ייטען דינמית באמצעות app.js -->
+        </div>
+    </main>
+
+    <!-- מודאל סנכרון גוגל שיטס -->
+    <div class="modal-overlay" id="syncModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeSyncModal()">&times;</button>
+            <h2 class="modal-title">סנכרון קורסים מ-Google Sheets</h2>
+            <p class="modal-desc">ייבוא לוח קורסים שלם ישירות מגיליון נתונים מקוון</p>
+            
+            <div class="sync-modal-body">
+                <div class="sync-instructions-box">
+                    <strong>כיצד לסנכרן?</strong>
+                    <ol>
+                        <li>פתחו את גיליון ה-Google Sheets שלכם.</li>
+                        <li>לחצו על <strong>קובץ (File)</strong> &gt; <strong>שיתוף (Share)</strong> &gt; <strong>פרסום באינטרנט (Publish to web)</strong>.</li>
+                        <li>בחרו בסוג הקובץ <strong>ערכים מופרדים בפסיק (CSV)</strong> ולחצו על "פרסם".</li>
+                        <li>העתיקו את הקישור שנוצר והדביקו אותו כאן למטה.</li>
+                    </ol>
+                </div>
+                
+                <form id="sheetsSyncForm" onsubmit="handleSheetsSync(event)">
+                    <div class="sync-input-group">
+                        <label for="sheetCsvUrl">כתובת הקישור (URL של ה-CSV) <span>*</span></label>
+                        <input type="url" id="sheetCsvUrl" required placeholder="https://docs.google.com/spreadsheets/d/.../pub?output=csv">
+                    </div>
+                    <button type="submit" class="btn-submit" id="syncSubmitBtn" style="margin-top: 16px;">
+                        <span id="syncBtnText">ביצוע סנכרון וייבוא</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- מודאל אישור איפוס (Reset Confirm Modal) -->
+    <div class="modal-overlay" id="resetModal">
+        <div class="modal-content" style="max-width: 450px; text-align: center;">
+            <button class="modal-close" onclick="closeResetModal()">&times;</button>
+            <div style="font-size: 3rem; color: #ef4444; margin-bottom: 16px;">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h2 class="modal-title">שחזור קורסי המקור?</h2>
+            <p class="modal-desc" style="margin-bottom: 24px;">האם אתם בטוחים שברצונכם למחוק את כל הקורסים המיובאים ולשחזר את 18 קורסי ברירת המחדל של העמותה לשנת 2026? פעולה זו אינה הפיכה.</p>
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button class="btn-secondary" onclick="closeResetModal()" style="max-width: 120px;">ביטול</button>
+                <button class="btn-primary" onclick="confirmResetToDefault()" style="max-width: 160px; background: #ef4444; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);">כן, שחזר מקור</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- מודאל יצירת קשר / רישום מהיר (Contact Modal) -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeContactModal()">&times;</button>
+            <h2 class="modal-title">רישום מהיר וייעוץ מקצועי</h2>
+            <p class="modal-desc">השאירו פרטים ונציג העמותה יחזור אליכם עם מידע על הקורסים והכנסים הקרובים.</p>
+            
+            <!-- קישור ישיר לרישום ותשלום רשמי -->
+            <div class="direct-register-box" style="background: rgba(6, 182, 212, 0.08); border: 1px solid rgba(6, 182, 212, 0.2); padding: 16px; border-radius: 12px; margin-bottom: 24px; text-align: center;">
+                <p style="font-size: 0.9rem; margin-bottom: 12px; font-weight: 600; color: var(--primary);">מעוניינים להירשם ולבצע תשלום מאובטח מיידית?</p>
+                <a href="https://www.iang.co.il/%D7%A8%D7%99%D7%A9%D7%95%D7%9D%D7%9C%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D" target="_blank" rel="noopener" class="btn-primary" style="display: inline-block; width: auto; padding: 10px 24px; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);">מעבר לטופס הרישום והתשלום הרשמי ↗</a>
+            </div>
+
+            <form id="quickContactForm" onsubmit="handleQuickContact(event)">
+                <div class="form-group">
+                    <label for="contactName">שם מלא <span>*</span></label>
+                    <input type="text" id="contactName" required placeholder="ישראל ישראלי">
+                </div>
+                <div class="form-group">
+                    <label for="contactPhone">מספר טלפון <span>*</span></label>
+                    <input type="tel" id="contactPhone" required placeholder="050-0000000">
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">כתובת אימייל <span>*</span></label>
+                    <input type="email" id="contactEmail" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="contactCourse">קורס מועדף <span>*</span></label>
+                    <select id="contactCourse" required>
+                        <option value="">-- בחרו קורס מרשימת ההכשרות --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="contactMsg">פרטים נוספים / הודעה <span>*</span></label>
+                    <textarea id="contactMsg" required rows="3" placeholder="כתבו כאן שאלות או בקשות מיוחדות..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">שליחת בקשה</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- פוטר (Footer) -->
+    <footer class="site-footer" id="siteFooter">
+        <div class="footer-container">
+            <!-- פרטי העמותה -->
+            <div class="footer-info">
+                <div class="footer-logo">
+                    <span class="footer-logo-title">העמותה לקידום הסיעוד הגריאטרי בישראל</span>
+                    <br>
+                    <span class="footer-logo-sub">מצוינות ומקצועיות בסיעוד הגיל השלישי</span>
+                </div>
+                <p class="footer-desc">
+                    העמותה משמשת כמקור המידע, הלמידה והפיתוח המקצועי המוביל לאחים ואחיות גריאטריים בישראל, ומחויבת לקידום איכות הטיפול ומעמד מקצוע הסיעוד הגריאטרי.
+                </p>
+            </div>
+            
+            <!-- ניווט מהיר -->
+            <div class="footer-links-col">
+                <h4>ניווט מהיר</h4>
+                <ul>
+                    <li><a href="index.html">דף הבית</a></li>
+                    <li><a href="courses.html">פריסת קורסים</a></li>
+                    <li><a href="feedback.html">משובים והמלצות</a></li>
+                    <li><a href="dashboard.html">דשבורד ממצאים</a></li>
+                    <li><a href="#" onclick="openContactModal(); return false;">הרשמה מהירה</a></li>
+                </ul>
+            </div>
+            
+            <!-- קורסים פופולריים -->
+            <div class="footer-links-col">
+                <h4>קורסים מובילים</h4>
+                <ul>
+                    <li><a href="courses.html?filter=clinical">ניהול טיפול בפצעים קשים</a></li>
+                    <li><a href="courses.html?filter=clinical">קורס ניהול כאב בגריאטריה</a></li>
+                    <li><a href="courses.html?filter=mgmt">מניעת זיהומים במוסדות</a></li>
+                    <li><a href="courses.html?filter=support">טיפול תומך ופליאטיבי</a></li>
+                </ul>
+            </div>
+            
+            <!-- פרטי התקשרות -->
+            <div class="footer-links-col">
+                <h4>פרטי התקשרות</h4>
+                <ul class="contact-info-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>052-5366303</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>amutageri@gmail.com</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                        <span>ישראל, מוסדות וקהילה</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- זכויות יוצרים ותחתית פוטר -->
+        <div class="footer-bottom">
+            <p>© 2026 העמותה לקידום הסיעוד הגריאטרי בישראל (IANG). כל הזכויות שמורות.</p>
+            <p>
+                <a href="#">תקנון העמותה</a> | 
+                <a href="#">הצהרת נגישות</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- קובץ נתוני גיבוי למשובים -->
+    <script src="reviews-data.js"></script>
+    <!-- קובץ לוגיקת JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
