@@ -303,6 +303,9 @@ input:focus, textarea:focus, select:focus {
     -webkit-backdrop-filter: blur(16px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     transition: var(--transition-medium);
+    cursor: pointer;
+    color: var(--text-main);
+    text-decoration: none;
 }
 
 /* אפקט גל זוהר ברקע הכרטיסייה */
@@ -315,6 +318,7 @@ input:focus, textarea:focus, select:focus {
     height: 100%;
     background: radial-gradient(circle at 100% 0%, var(--primary-glow) 0%, transparent 60%);
     opacity: 0;
+    pointer-events: none;
     transition: var(--transition-medium);
 }
 
@@ -395,6 +399,8 @@ input:focus, textarea:focus, select:focus {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--border-color);
     border-radius: 50px;
+    position: relative;
+    z-index: 2;
 }
 
 .accent-card .card-link-btn {

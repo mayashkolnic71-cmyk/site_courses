@@ -4,6 +4,9 @@
 $WatcherPath = "d:/antigravity"
 $LogFile = "$WatcherPath/autopush.log"
 
+# Set working directory explicitly for detached background shells
+Set-Location -Path $WatcherPath
+
 function Write-Log ($Message) {
     $Timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
     $LogMessage = "[$Timestamp] $Message"
