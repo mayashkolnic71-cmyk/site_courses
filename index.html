@@ -3,235 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="הפורטל הרשמי של העמותה לקידום הסיעוד הגריאטרי בישראל (IANG). מצאו פריסת קורסים מעודכנת, סילבוסים, משובים של אחים ואחיות, והצטרפו להכשרות מובילות.">
-    <meta name="keywords" content="סיעוד גריאטרי, אחיות גריאטריות, קורסים בסיעוד, העמותה לקידום הסיעוד הגריאטרי בישראל, IANG, השתלמויות אחיות, פצעים קשים, מניעת זיהומים">
-    <title>פורטל למידה והכשרות | העמותה לקידום הסיעוד הגריאטרי בישראל (IANG)</title>
+    <title>פורטל ניהול סיעוד - גריאטריה וסיעוד</title>
     
-    <!-- פונטים מ-Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- קובץ עיצוב ראשי -->
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <!-- Chart.js for Dashboard -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
-    <!-- הידר עליון (Header) -->
-    <header class="site-header" id="mainHeader">
-        <div class="header-container">
-            <a href="index.html" class="logo-wrapper" id="logoLink">
-                <img src="logo.png" alt="לוגו העמותה לקידום הסיעוד הגריאטרי בישראל" class="logo-img" id="logoImg">
-                <div class="logo-text">
-                    <span class="logo-title" id="logoTitle">העמותה לקידום הסיעוד הגריאטרי</span>
-                    <span class="logo-subtitle" id="logoSub">בישראל (IANG)</span>
-                </div>
-            </a>
-            
-            <!-- תפריט ניווט -->
-            <nav class="main-nav" id="mainNav">
-                <a href="index.html" class="nav-link active" id="navHome">דף הבית</a>
-                <a href="courses.html" class="nav-link" id="navCourses">פריסת קורסים</a>
-                <a href="feedback.html" class="nav-link" id="navFeedback">משובים והמלצות</a>
-                <a href="dashboard.html" class="nav-link" id="navDashboard">דשבורד ממצאים</a>
-                <a href="https://www.iang.co.il/%D7%A8%D7%99%D7%A9%D7%95%D7%9D%D7%9C%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D" target="_blank" rel="noopener" class="cta-nav-btn" id="navContactBtn">רישום באתר העמותה ↗</a>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass">
+            <div class="logo">
+                <i data-lucide="hospital" class="icon-lg"></i>
+                <h2>פורטל ניהול סיעוד</h2>
+            </div>
+            <nav>
+                <a href="#" class="nav-item active" data-tab="dashboard">
+                    <i data-lucide="bar-chart-2"></i>
+                    <span>דאשבורד מדדים ויעדים</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="core-plan">
+                    <i data-lucide="target"></i>
+                    <span>תכנית ליבה ועבודה שנתית</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="org-structure">
+                    <i data-lucide="network"></i>
+                    <span>מבנה ארגוני והנהלת סיעוד</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="training-calendar">
+                    <i data-lucide="calendar-check"></i>
+                    <span>הכשרה וכשירות (לוח הדרכות)</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="professionalism">
+                    <i data-lucide="stethoscope"></i>
+                    <span>מקצועיות ומתן טיפול</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="achievements">
+                    <i data-lucide="award"></i>
+                    <span>הישגים מרכזיים</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="appendices">
+                    <i data-lucide="paperclip"></i>
+                    <span>נספחים</span>
+                </a>
             </nav>
-            
-            <!-- כפתור המבורגר למובייל -->
-            <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="תפריט ניווט">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </header>
+        </aside>
 
-    <!-- סקציית הגיבור (Hero Section) -->
-    <main class="hero-section" id="heroSection">
-        <div class="hero-content">
-            <div class="badge" id="heroBadge">
-                <span class="dot"></span>
-                <span>פיתוח מקצועי ומצוינות בסיעוד</span>
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <h1>מערכת ניהול, הדרכה ובקרה ארגונית</h1>
+                <div class="user-profile">
+                    <div class="avatar">מ</div>
+                    <span>מנהלת סיעוד</span>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                
+                <!-- 0. Dashboard Tab -->
+                <section id="dashboard" class="tab-content active">
+                    <div class="card glass" style="margin-bottom: 20px;">
+                        <h3>בקרה וניתוח נתונים (Dashboard)</h3>
+                        <p>מעקב אחר התקדמות המוסד ביחס ליעדים הפנימיים והארציים (בהתבסס על תמהיל כוח האדם ומכרז הקודים).</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card glass primary-grad">
+                            <h3>ניקוד הדרכות נוכחי (מכרז)</h3>
+                            <div class="value">13.5 / 15</div>
+                            <p class="subtitle">עמידה ב-90% מיעדי ההדרכה השנתיים</p>
+                        </div>
+                        <div class="stat-card glass secondary-grad">
+                            <h3>אחיות בוגרות על בסיסי</h3>
+                            <div class="value">45%</div>
+                            <p class="subtitle">יעד מוסדי: 60% <span style="color:#ef4444; font-weight:bold;">(פער של 15%-)</span></p>
+                        </div>
+                        <div class="stat-card glass accent-grad">
+                            <h3>נאמני נושא קליני מוסמכים</h3>
+                            <div class="value">36%</div>
+                            <p class="subtitle">יעד מוסדי: 50% <span style="color:#ef4444; font-weight:bold;">(פער של 14%-)</span></p>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px;">
+                        <div class="card glass">
+                            <h4 style="margin-bottom: 15px; text-align: center;">התפלגות תמהיל כוח אדם (בפועל לעומת יעד)</h4>
+                            <canvas id="staffMixChart"></canvas>
+                        </div>
+                        <div class="card glass">
+                            <h4 style="margin-bottom: 15px; text-align: center;">התקדמות קורס נאמני נושא (40 שעות)</h4>
+                            <canvas id="trainingProgressChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 1. Core Plan Tab -->
+                <section id="core-plan" class="tab-content">
+                    <div class="card glass">
+                        <h3>תכנית ליבה ותוכנית עבודה שנתית</h3>
+                        <p>כאן תוצג אסטרטגיית הניהול של הסיעוד בארגון ויעדי הליבה לשנה הקרובה, מותאם לחזון הארגוני ויעדי משרד הבריאות.</p>
+                        <div class="content-placeholder" style="margin-top:20px; padding:20px; background:rgba(255,255,255,0.05); border-radius:8px;">
+                            הגדרת היעדים השנתיים (מבוסס מכרז קודים)...
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. Org Structure Tab -->
+                <section id="org-structure" class="tab-content">
+                    <div class="card glass" style="margin-bottom: 20px;">
+                        <h3>פיתוח עתודה ניהולית ומנהיגות</h3>
+                        <p>ניהול ומעקב אחר פיתוח המנהיגות בקרב הצוות הסיעודי, ריכוז אחריות משמרת ואחיות בכירות.</p>
+                    </div>
+
+                    <div class="card glass" style="margin-bottom: 20px;">
+                        <h3>תמהיל כוח אדם</h3>
+                        <p style="margin-bottom:15px; font-size: 0.9rem; color:#cbd5e1;">לחץ על תאי היעד (פנימי/ארצי) בכדי לערוך את הערכים בהתאם למוסד.</p>
+                        <div class="table-responsive">
+                            <table class="staff-table" id="mix-table">
+                                <thead>
+                                    <tr>
+                                        <th>פרמטר</th>
+                                        <th>יעד פנימי / ארצי (ניתן לעריכה)</th>
+                                        <th>2025</th>
+                                        <th>2024</th>
+                                        <th>2023</th>
+                                        <th>2022</th>
+                                        <th>2021</th>
+                                        <th>2020</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>אחוז האחים מוסמכים מכלל האחים ללא תואר</td>
+                                        <td contenteditable="true" class="editable-cell">0 / 0</td>
+                                        <td>5.8% (6)</td>
+                                        <td>7.9% (10)</td>
+                                        <td>14.5%</td>
+                                        <td>23.2%</td>
+                                        <td>20.5%</td>
+                                        <td>12.3%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>אחוז האחים מעשיים מכלל האחים</td>
+                                        <td contenteditable="true" class="editable-cell">0 / 8%</td>
+                                        <td>12% (15)</td>
+                                        <td>16.6% (21)</td>
+                                        <td>16.6% (22)</td>
+                                        <td>17.6%</td>
+                                        <td>18.6%</td>
+                                        <td>17.6%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>אחוז האחים בוגרי על בסיסי</td>
+                                        <td contenteditable="true" class="editable-cell">60% / 50%</td>
+                                        <td>45.6% (47)</td>
+                                        <td>34.6% (43)</td>
+                                        <td>28.7% (37)</td>
+                                        <td>22.4%</td>
+                                        <td>21.18%</td>
+                                        <td>18.46%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>אחוז האחים בעלי הכשרה של נאמני נושא קליני</td>
+                                        <td contenteditable="true" class="editable-cell">50% - 60%</td>
+                                        <td>36.8% (38)</td>
+                                        <td>31.4% (33)</td>
+                                        <td>28% (27)</td>
+                                        <td>8.7%</td>
+                                        <td>7.62%</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>אחוז האחים בעלי תואר שני</td>
+                                        <td contenteditable="true" class="editable-cell">12%</td>
+                                        <td>9.7% (10)</td>
+                                        <td>13.3% (14)</td>
+                                        <td>9%</td>
+                                        <td>8.7%</td>
+                                        <td>7.62%</td>
+                                        <td>8.46%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="card glass">
+                            <h3>ריכוז אחריות משמרת</h3>
+                            <ul class="task-list" id="shift-managers">
+                                <li>
+                                    <span>אחראית משמרת: מחלקה א'</span>
+                                    <button class="btn btn-sm" onclick="alert('הדמיית העלאת קובץ...')"><i data-lucide="upload"></i> העלה אישור/חידוש</button>
+                                </li>
+                                <li>
+                                    <span>אחראית משמרת: מחלקה ב'</span>
+                                    <button class="btn btn-sm" onclick="alert('הדמיית העלאת קובץ...')"><i data-lucide="upload"></i> העלה אישור/חידוש</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card glass">
+                            <h3>הכשרות נאמני נושא ומינויים</h3>
+                            <ul class="task-list" id="topic-trustees">
+                                <li>
+                                    <span>נאמן פצע</span>
+                                    <button class="btn btn-sm"><i data-lucide="upload"></i> צרף כתב מינוי</button>
+                                </li>
+                                <li>
+                                    <span>נאמן זיהומים</span>
+                                    <button class="btn btn-sm"><i data-lucide="upload"></i> צרף כתב מינוי</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. Training & Competency Tab -->
+                <section id="training-calendar" class="tab-content">
+                    <div class="card glass full-height" style="display: flex; flex-direction: column;">
+                        <div class="card-header" style="margin-bottom: 15px;">
+                            <h3>הכשרה וכשירות - פריסת הדרכות שנתית (כולל חגי ישראל)</h3>
+                            <div class="instruction-box" style="background: rgba(59, 130, 246, 0.1); padding: 15px; border-radius: 8px; border-right: 4px solid var(--primary); margin-top: 10px;">
+                                <h4 style="margin-bottom: 8px; color: #fff;">הנחיות עבודה נדרשות (מכרז קודים):</h4>
+                                <ul style="list-style-type: none; font-size: 0.9rem; line-height: 1.6;">
+                                    <li><i data-lucide="check-circle" style="width: 14px; height: 14px; display:inline-block; vertical-align:middle;"></i> כל מפגש/הדרכה/ועדה מחייב פרוטוקול וחתימת המשתתפים.</li>
+                                    <li><i data-lucide="check-circle" style="width: 14px; height: 14px; display:inline-block; vertical-align:middle;"></i> יש לשלוח פרוטוקול ולהדפיסו לתיק הרלוונטי.</li>
+                                    <li><i data-lucide="check-circle" style="width: 14px; height: 14px; display:inline-block; vertical-align:middle;"></i> בישיבות צוות מחלקתיות חובה להחתים נוכחים לקבלת הדרכה.</li>
+                                    <li><i data-lucide="check-circle" style="width: 14px; height: 14px; display:inline-block; vertical-align:middle;"></i> הכשרה פורמלית (40 שעות) לנאמני נושא קליניים נדרשת בכל מחלקה.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="calendar-container" style="flex: 1; background: white; padding: 20px; border-radius: 12px; color: #1e293b;">
+                            <div id="fullcalendar-view"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. Professionalism Tab -->
+                <section id="professionalism" class="tab-content">
+                    <div class="card glass">
+                        <h3>מקצועיות ומתן טיפול</h3>
+                        <p>הצגת פרויקטים מקומיים במחלקות לפי תחומי רכזי אורך ורוחב.</p>
+                        
+                        <div class="projects-grid" style="margin-top: 20px; display: grid; gap: 15px; grid-template-columns: 1fr 1fr;">
+                            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                                <h4 style="color: var(--primary-light);">פרויקט מניעת זיהומים במחלקות מונשמים</h4>
+                                <p style="font-size:0.9rem; margin-top:10px;">רכז רוחב: נאמן זיהומים</p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                                <h4 style="color: var(--primary-light);">פרויקט שיפור טיפול בפצעים קשי ריפוי</h4>
+                                <p style="font-size:0.9rem; margin-top:10px;">רכז אורך: אחות אחראית פצע</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. Achievements Tab -->
+                <section id="achievements" class="tab-content">
+                    <div class="card glass">
+                        <h3>הישגים מרכזיים</h3>
+                        <p>ציוני דרך והצלחות ניהוליות ומקצועיות של מערך הסיעוד במוסד לאורך השנה.</p>
+                        <ul class="task-list" style="margin-top: 20px;">
+                            <li><span class="dot success"></span> עמידה מלאה בדרישות הבקרה של משרד הבריאות לשנת 2023.</li>
+                            <li><span class="dot success"></span> הגדלת אחוז האחיות האקדמאיות ב-15% בשנתיים.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 6. Appendices Tab -->
+                <section id="appendices" class="tab-content">
+                    <div class="card glass">
+                        <h3>נספחים (טפסים ומסמכים)</h3>
+                        <p style="margin-bottom:20px;">מאגר טפסים ומסמכי רגולציה נדרשים לניהול הדרכות ומשמרות.</p>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <div class="file-item">
+                                <i data-lucide="file-text" style="color:var(--primary-light);"></i>
+                                <div style="flex:1;">
+                                    <h4>טופס כתב מינוי לנאמן נושא</h4>
+                                    <span style="font-size:0.8rem; color:#cbd5e1;">תבנית למילוי וחתימה</span>
+                                </div>
+                                <button class="btn btn-sm">הורדה <i data-lucide="download" style="width:14px; height:14px;"></i></button>
+                            </div>
+
+                            <div class="file-item">
+                                <i data-lucide="file-text" style="color:var(--primary-light);"></i>
+                                <div style="flex:1;">
+                                    <h4>טופס אחריות משמרת</h4>
+                                    <span style="font-size:0.8rem; color:#cbd5e1;">מסמך האצלת סמכויות לאחות אחראית משמרת</span>
+                                </div>
+                                <button class="btn btn-sm">הורדה <i data-lucide="download" style="width:14px; height:14px;"></i></button>
+                            </div>
+
+                            <div class="file-item">
+                                <i data-lucide="file-text" style="color:var(--primary-light);"></i>
+                                <div style="flex:1;">
+                                    <h4>טופס החתמת נוכחות בהדרכה</h4>
+                                    <span style="font-size:0.8rem; color:#cbd5e1;">טופס חובה לכל ישיבה מחלקתית / ועדת היגוי</span>
+                                </div>
+                                <button class="btn btn-sm">הורדה <i data-lucide="download" style="width:14px; height:14px;"></i></button>
+                            </div>
+
+                            <div class="file-item">
+                                <i data-lucide="file-text" style="color:var(--primary-light);"></i>
+                                <div style="flex:1;">
+                                    <h4>טופס פורמט מובנה לפרוטוקול ועדה</h4>
+                                    <span style="font-size:0.8rem; color:#cbd5e1;">סיכום ישיבת ועדה, החלטות ומעקב ביצוע</span>
+                                </div>
+                                <button class="btn btn-sm">הורדה <i data-lucide="download" style="width:14px; height:14px;"></i></button>
+                            </div>
+
+                            <div class="file-item">
+                                <i data-lucide="file-text" style="color:var(--danger);"></i>
+                                <div style="flex:1;">
+                                    <h4>מכרז הקודים המקורי (משרד הבריאות)</h4>
+                                    <span style="font-size:0.8rem; color:#cbd5e1;">דרישות הרגולציה מ-2024 והלאה (15 נק' הדרכות)</span>
+                                </div>
+                                <button class="btn btn-sm">הורדה <i data-lucide="download" style="width:14px; height:14px;"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
             </div>
-            <h1 class="hero-title" id="heroTitle">
-                <span class="gradient-text">פורטל הלמידה וההכשרות</span>
-                <br>
-                <span>העמותה לקידום הסיעוד הגריאטרי</span>
-            </h1>
-            <p class="hero-description" id="heroDesc">
-                ברוכים הבאים לשער ההעשרה המרכזי של אחיות ואחים העוסקים בגריאטריה בישראל. כאן תוכלו לעיין בקטלוג הקורסים והסילבוסים המקצועיים שלנו, לקרוא המלצות של עמיתים מהשטח, לשתף משובים משלכם ולהירשם להכשרות מתקדמות שיזניקו את הקריירה המקצועית שלכם.
-            </p>
-        </div>
-
-        <!-- כרטיסיות הניווט הראשיות (Portal Grid) -->
-        <section class="portal-grid" id="portalGrid" aria-label="שירותי הפורטל המרכזיים">
-            <!-- כרטיסיית קורסים -->
-            <a href="courses.html" class="portal-card" id="coursesCard">
-                <div class="card-icon-box">
-                    <!-- אייקון ספר רפואי -->
-                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                        <path d="M12 6v10"></path>
-                        <path d="M8 10h8"></path>
-                    </svg>
-                </div>
-                <h3 class="card-title">פריסת הקורסים ומסלולי ההכשרה</h3>
-                <p class="card-desc">
-                    מגוון רחב של קורסים פרונטליים ומקוונים בסיעוד גריאטרי, ניהול כאב, טיפול בפצעים קשים, מניעת זיהומים, בטיחות הטיפול ועוד. עיינו בסילבוסים וסננו לפי קטגוריות מקצועיות.
-                </p>
-                <div class="card-link-btn" id="goToCoursesBtn">
-                    <span>לצפייה בפריסת הקורסים</span>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-            </a>
-
-            <!-- כרטיסיית משובים -->
-            <a href="feedback.html" class="portal-card accent-card" id="feedbackCard">
-                <div class="card-icon-box">
-                    <!-- אייקון כוכב/המלצה -->
-                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                    </svg>
-                </div>
-                <h3 class="card-title">לוח משובים וחוות דעת של הלומדים</h3>
-                <p class="card-desc">
-                    המלצות, דירוגים ורשמים של אחים ואחיות שסיימו את ההכשרות והכנסים של העמותה. בואו לקרוא מה אומרים עמיתיכם מהשטח, או שתפו אותנו במשוב האישי שלכם.
-                </p>
-                <div class="card-link-btn" id="goToFeedbackBtn">
-                    <span>לקריאה וכתיבת משובים</span>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-            </a>
-        </section>
-    </main>
-
-    <!-- מודאל יצירת קשר / רישום מהיר (Contact Modal) -->
-    <div class="modal-overlay" id="contactModal">
-        <div class="modal-content">
-            <button class="modal-close" id="closeModalBtn" onclick="closeContactModal()">&times;</button>
-            <h2 class="modal-title" id="modalTitle">רישום מהיר וייעוץ מקצועי</h2>
-            <p class="modal-desc" id="modalDesc">השאירו פרטים ונציג העמותה יחזור אליכם עם מידע על הקורסים והכנסים הקרובים.</p>
-            
-            <!-- קישור ישיר לרישום ותשלום רשמי -->
-            <div class="direct-register-box" style="background: rgba(6, 182, 212, 0.08); border: 1px solid rgba(6, 182, 212, 0.2); padding: 16px; border-radius: 12px; margin-bottom: 24px; text-align: center;">
-                <p style="font-size: 0.9rem; margin-bottom: 12px; font-weight: 600; color: var(--primary);">מעוניינים להירשם ולבצע תשלום מאובטח מיידית?</p>
-                <a href="https://www.iang.co.il/%D7%A8%D7%99%D7%A9%D7%95%D7%9D%D7%9C%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D" target="_blank" rel="noopener" class="btn-primary" style="display: inline-block; width: auto; padding: 10px 24px; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);">מעבר לטופס הרישום והתשלום הרשמי ↗</a>
-            </div>
-
-            <form id="quickContactForm" onsubmit="handleQuickContact(event)">
-                <div class="form-group">
-                    <label for="contactName">שם מלא <span>*</span></label>
-                    <input type="text" id="contactName" required placeholder="ישראל ישראלי">
-                </div>
-                <div class="form-group">
-                    <label for="contactPhone">מספר טלפון <span>*</span></label>
-                    <input type="tel" id="contactPhone" required placeholder="050-0000000">
-                </div>
-                <div class="form-group">
-                    <label for="contactEmail">כתובת אימייל <span>*</span></label>
-                    <input type="email" id="contactEmail" required placeholder="name@example.com">
-                </div>
-                <div class="form-group">
-                    <label for="contactCourse">קורס מועדף</label>
-                    <select id="contactCourse">
-                        <option value="">-- בחרו קורס מרשימת ההכשרות --</option>
-                        <option value="wounds">ניהול הטיפול בפצעים קשים</option>
-                        <option value="pain">קורס ניהול כאב בגריאטריה</option>
-                        <option value="infection">הכשרה למניעת זיהומים</option>
-                        <option value="risk">בטיחות הטיפול וניהול סיכונים</option>
-                        <option value="palliative">טיפול תומך ומצבי סוף החיים</option>
-                        <option value="person">טיפול ממוקד אדם בגריאטריה</option>
-                        <option value="diabetes">קורס סוכרת מתקדם</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn-submit" id="submitContactBtn">שליחת בקשה</button>
-            </form>
-        </div>
+        </main>
     </div>
 
-    <!-- פוטר (Footer) -->
-    <footer class="site-footer" id="siteFooter">
-        <div class="footer-container">
-            <!-- פרטי העמותה -->
-            <div class="footer-info">
-                <div class="footer-logo">
-                    <span class="footer-logo-title">העמותה לקידום הסיעוד הגריאטרי בישראל</span>
-                    <br>
-                    <span class="footer-logo-sub">מצוינות ומקצועיות בסיעוד הגיל השלישי</span>
-                </div>
-                <p class="footer-desc">
-                    העמותה משמשת כמקור המידע, הלמידה והפיתוח המקצועי המוביל לאחים ואחיות גריאטריים בישראל, ומחויבת לקידום איכות הטיפול ומעמד מקצוע הסיעוד הגריאטרי.
-                </p>
-            </div>
-            
-            <!-- ניווט מהיר -->
-            <div class="footer-links-col">
-                <h4>ניווט מהיר</h4>
-                <ul>
-                    <li><a href="index.html">דף הבית</a></li>
-                    <li><a href="courses.html">פריסת קורסים</a></li>
-                    <li><a href="feedback.html">משובים והמלצות</a></li>
-                    <li><a href="dashboard.html">דשבורד ממצאים</a></li>
-                    <li><a href="#" onclick="openContactModal(); return false;">הרשמה מהירה</a></li>
-                </ul>
-            </div>
-            
-            <!-- קורסים פופולריים -->
-            <div class="footer-links-col">
-                <h4>קורסים מובילים</h4>
-                <ul>
-                    <li><a href="courses.html?filter=clinical">ניהול טיפול בפצעים קשים</a></li>
-                    <li><a href="courses.html?filter=clinical">קורס ניהול כאב בגריאטריה</a></li>
-                    <li><a href="courses.html?filter=mgmt">מניעת זיהומים במוסדות</a></li>
-                    <li><a href="courses.html?filter=support">טיפול תומך ופליאטיבי</a></li>
-                </ul>
-            </div>
-            
-            <!-- פרטי התקשרות -->
-            <div class="footer-links-col">
-                <h4>פרטי התקשרות</h4>
-                <ul class="contact-info-list">
-                    <li>
-                        <svg viewBox="0 0 24 24" width="16" height="16">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>052-5366303</span>
-                    </li>
-                    <li>
-                        <svg viewBox="0 0 24 24" width="16" height="16">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                            <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>amutageri@gmail.com</span>
-                    </li>
-                    <li>
-                        <svg viewBox="0 0 24 24" width="16" height="16">
-                            <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                            <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
-                        </svg>
-                        <span>ישראל, מוסדות וקהילה</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- זכויות יוצרים ותחתית פוטר -->
-        <div class="footer-bottom">
-            <p>© 2026 העמותה לקידום הסיעוד הגריאטרי בישראל (IANG). כל הזכויות שמורות.</p>
-            <p>
-                <a href="#" id="rulesLink">תקנון העמותה</a> | 
-                <a href="#" id="accessibilityLink">הצהרת נגישות</a>
-            </p>
-        </div>
-    </footer>
-
-    <!-- קובץ נתוני גיבוי למשובים -->
-    <script src="reviews-data.js"></script>
-    <!-- קובץ לוגיקת JavaScript -->
+    <!-- Application Script -->
     <script src="app.js"></script>
 </body>
 </html>
