@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת ניהול הדרכות לגריאטריה וסיעוד</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- FullCalendar JS & CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass">
+            <div class="logo">
+                <i data-lucide="hospital" class="icon-lg"></i>
+                <h2>ניהול מוסדות גריאטריים</h2>
+            </div>
+            <nav>
+                <a href="#" class="nav-item active" data-tab="dashboard">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>לוח בקרה</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="calendar">
+                    <i data-lucide="calendar-days"></i>
+                    <span>לוח תכנון הדרכות</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="staff">
+                    <i data-lucide="users"></i>
+                    <span>מעקב צוות והכשרות</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <h1>מערכת הדרכות - תאימות מכרז קודים 2024</h1>
+                <div class="user-profile">
+                    <div class="avatar">א</div>
+                    <span>אחות ראשית / הנהלה</span>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <!-- Dashboard Tab -->
+                <section id="dashboard" class="tab-content active">
+                    <div class="stats-grid">
+                        <div class="stat-card glass primary-grad">
+                            <h3>ניקוד הדרכות נוכחי (מתוך 15)</h3>
+                            <div class="value">12 / 15</div>
+                            <p class="subtitle">עמידה בדרישות הרגולציה</p>
+                        </div>
+                        <div class="stat-card glass secondary-grad">
+                            <h3>השתתפות אחיות בחת"ש</h3>
+                            <div class="value">75%</div>
+                            <p class="subtitle">היעד השנתי: 70%</p>
+                        </div>
+                        <div class="stat-card glass accent-grad">
+                            <h3>מטפלים חדשים בהכשרה</h3>
+                            <div class="value">8</div>
+                            <p class="subtitle">קורס 18 שעות בתהליך</p>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-details">
+                        <div class="card glass">
+                            <h3>משימות פתוחות</h3>
+                            <ul class="task-list">
+                                <li>
+                                    <span class="dot warning"></span>
+                                    <span>השלמת קורס 40 שעות ל-3 מטפלים חדשים עד סוף החודש</span>
+                                </li>
+                                <li>
+                                    <span class="dot danger"></span>
+                                    <span>חסרים נאמני מניעת זיהומים במחלקות מונשמים</span>
+                                </li>
+                                <li>
+                                    <span class="dot success"></span>
+                                    <span>דיווח שעות הדרכה (חת"ש) לשנת 2025 אושר</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Calendar Tab -->
+                <section id="calendar" class="tab-content">
+                    <div class="card glass full-height" style="display: flex; flex-direction: column;">
+                        <div class="card-header" style="margin-bottom: 15px;">
+                            <h3>פריסת הדרכות שנתית - שילוב חגי ישראל (Drag & Drop)</h3>
+                            <p style="color: #64748b; font-size: 0.9rem;">יש לגרור את ההדרכות לתאריכים הרצויים. חגים ומועדים מסומנים בצבע כדי למנוע התנגשויות.</p>
+                        </div>
+                        <div class="calendar-container" style="flex: 1; background: white; padding: 20px; border-radius: 12px; color: #1e293b;">
+                            <div id="fullcalendar-view"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Staff Tab -->
+                <section id="staff" class="tab-content">
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3>סטטוס הכשרות - צוות רב מקצועי</h3>
+                            <button class="btn btn-primary"><i data-lucide="user-plus"></i> קליטת עובד חדש</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="staff-table">
+                                <thead>
+                                    <tr>
+                                        <th>שם העובד</th>
+                                        <th>מקצוע / תפקיד</th>
+                                        <th>מחלקה</th>
+                                        <th>הכשרת בסיס / חת"ש</th>
+                                        <th>נאמן נושא / העצמה</th>
+                                        <th>סטטוס עמידה במכרז</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="staff-table-body">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Application Script -->
+    <script src="app.js"></script>
+</body>
+</html>

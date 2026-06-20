@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?><ct:contentTypeSchema ct:_="" ma:_="" ma:contentTypeName="אגף תקציבים - דואר יוצא" ma:contentTypeID="0x0101006295B2BB7C76AE4F9A31D27C8947EBBB6200D6381DB5FD689B4C8B5A82A99A04D34D" ma:contentTypeVersion="38" ma:contentTypeDescription="צור מסמך חדש." ma:contentTypeScope="" ma:versionID="a80d689a48d8368901b084509c9ea66a" xmlns:ct="http://schemas.microsoft.com/office/2006/metadata/contentType" xmlns:ma="http://schemas.microsoft.com/office/2006/metadata/properties/metaAttributes">
+<xsd:schema targetNamespace="http://schemas.microsoft.com/office/2006/metadata/properties" ma:root="true" ma:fieldsID="aa75dc9fc8401507313ad52e9eb52a56" ns1:_="" ns2:_="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:p="http://schemas.microsoft.com/office/2006/metadata/properties" xmlns:ns1="259059E7-4242-40BE-BF07-CF9C61A6A365" xmlns:ns2="b2777e8a-89a9-4401-8efd-f2787ffefdf8">
+<xsd:import namespace="259059E7-4242-40BE-BF07-CF9C61A6A365"/>
+<xsd:import namespace="b2777e8a-89a9-4401-8efd-f2787ffefdf8"/>
+<xsd:element name="properties">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="documentManagement">
+<xsd:complexType>
+<xsd:all>
+<xsd:element ref="ns1:NameMiaen" minOccurs="0"/>
+<xsd:element ref="ns2:Ny" minOccurs="0"/>
+<xsd:element ref="ns2:SDMailOut" minOccurs="0"/>
+<xsd:element ref="ns1:Nignaz" minOccurs="0"/>
+<xsd:element ref="ns1:_x05e9__x05dd__x0020__x05d4__x05e0__x05de__x05e2__x05df_" minOccurs="0"/>
+<xsd:element ref="ns1:Nishlach" minOccurs="0"/>
+<xsd:element ref="ns2:AutoNumber" minOccurs="0"/>
+<xsd:element ref="ns2:SDCategories" minOccurs="0"/>
+<xsd:element ref="ns2:SDCategoryID" minOccurs="0"/>
+<xsd:element ref="ns2:SDAuthor" minOccurs="0"/>
+<xsd:element ref="ns2:SDDocDate" minOccurs="0"/>
+<xsd:element ref="ns2:SDHebDate" minOccurs="0"/>
+<xsd:element ref="ns2:SDOriginalID" minOccurs="0"/>
+<xsd:element ref="ns2:SDOfflineTo" minOccurs="0"/>
+<xsd:element ref="ns2:SDAsmachta" minOccurs="0"/>
+<xsd:element ref="ns2:SDImportance" minOccurs="0"/>
+<xsd:element ref="ns2:SDDocumentSource" minOccurs="0"/>
+<xsd:element ref="ns2:SDLastSigningDate" minOccurs="0"/>
+<xsd:element ref="ns2:SDNumOfSignatures" minOccurs="0"/>
+<xsd:element ref="ns2:SDSignersLogins" minOccurs="0"/>
+<xsd:element ref="ns2:SDExternalEntityConnected" minOccurs="0"/>
+</xsd:all>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>
+<xsd:schema targetNamespace="259059E7-4242-40BE-BF07-CF9C61A6A365" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dms="http://schemas.microsoft.com/office/2006/documentManagement/types" xmlns:pc="http://schemas.microsoft.com/office/infopath/2007/PartnerControls">
+<xsd:import namespace="http://schemas.microsoft.com/office/2006/documentManagement/types"/>
+<xsd:import namespace="http://schemas.microsoft.com/office/infopath/2007/PartnerControls"/>
+<xsd:element name="NameMiaen" ma:index="0" nillable="true" ma:displayName="שם השולח-" ma:description="בשימוש תקציבים" ma:internalName="NameMiaen">
+<xsd:simpleType>
+<xsd:restriction base="dms:Text">
+<xsd:maxLength value="255"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="Nignaz" ma:index="3" nillable="true" ma:displayName="נגנז" ma:format="Dropdown" ma:internalName="Nignaz">
+<xsd:simpleType>
+<xsd:union memberTypes="dms:Text">
+<xsd:simpleType>
+<xsd:restriction base="dms:Choice">
+<xsd:enumeration value="לא"/>
+<xsd:enumeration value="כן"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:union>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="_x05e9__x05dd__x0020__x05d4__x05e0__x05de__x05e2__x05df_" ma:index="4" nillable="true" ma:displayName="שם הנמען" ma:description="בשימוש תקציבים" ma:internalName="_x05e9__x05dd__x0020__x05d4__x05e0__x05de__x05e2__x05df_">
+<xsd:simpleType>
+<xsd:restriction base="dms:Text">
+<xsd:maxLength value="255"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="Nishlach" ma:index="5" nillable="true" ma:displayName="נשלח" ma:format="Dropdown" ma:internalName="Nishlach">
+<xsd:simpleType>
+<xsd:restriction base="dms:Choice">
+<xsd:enumeration value="לא"/>
+<xsd:enumeration value="כן"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:schema>
+<xsd:schema targetNamespace="b2777e8a-89a9-4401-8efd-f2787ffefdf8" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dms="http://schemas.microsoft.com/office/2006/documentManagement/types" xmlns:pc="http://schemas.microsoft.com/office/infopath/2007/PartnerControls">
+<xsd:import namespace="http://schemas.microsoft.com/office/2006/documentManagement/types"/>
+<xsd:import namespace="http://schemas.microsoft.com/office/infopath/2007/PartnerControls"/>
+<xsd:element name="Ny" ma:index="1" nillable="true" ma:displayName="נכנס/יוצא" ma:default="דואר יוצא" ma:format="Dropdown" ma:internalName="Ny">
+<xsd:simpleType>
+<xsd:restriction base="dms:Choice">
+<xsd:enumeration value="דואר יוצא"/>
+<xsd:enumeration value="דואר נכנס"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDMailOut" ma:index="2" nillable="true" ma:displayName="אל ועותק" ma:internalName="SDMailOut">
+<xsd:simpleType>
+<xsd:restriction base="dms:Note">
+<xsd:maxLength value="255"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="AutoNumber" ma:index="6" nillable="true" ma:displayName="סימוכין" ma:indexed="true" ma:internalName="AutoNumber">
+<xsd:simpleType>
+<xsd:restriction base="dms:Text"/>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDCategories" ma:index="7" nillable="true" ma:displayName="נושאים" ma:internalName="SDCategories" ma:readOnly="false">
+<xsd:simpleType>
+<xsd:restriction base="dms:Note"/>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDCategoryID" ma:index="8" nillable="true" ma:displayName="SDCategoryID" ma:indexed="true" ma:internalName="SDCategoryID">
+<xsd:simpleType>
+<xsd:restriction base="dms:Text"/>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDAuthor" ma:index="9" nillable="true" ma:displayName="מחבר" ma:indexed="true" ma:internalName="SDAuthor">
+<xsd:simpleType>
+<xsd:restriction base="dms:Text"/>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDDocDate" ma:index="10" nillable="true" ma:displayName="תאריך המסמך" ma:indexed="true" ma:internalName="SDDocDate">
+<xsd:simpleType>
+<xsd:restriction base="dms:DateTime"/>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDHebDate" ma:index="11" nillable="true" ma:displayName="SDHebDate" ma:internalName="SDHebDate">
+<xsd:simpleType>
+<xsd:restriction base="dms:Text"/>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDOriginalID" ma:index="12" nillable="true" ma:displayName="SDOriginalID" ma:internalName="SDOriginalID">
+<xsd:simpleType>
+<xsd:restriction base="dms:Text"/>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDOfflineTo" ma:index="13" nillable="true" ma:displayName="SDOfflineTo" ma:internalName="SDOfflineTo">
+<xsd:simpleType>
+<xsd:restriction base="dms:Text"/>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDAsmachta" ma:index="14" nillable="true" ma:displayName="אסמכתא" ma:internalName="SDAsmachta">
+<xsd:simpleType>
+<xsd:restriction base="dms:Text"/>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDImportance" ma:index="15" nillable="true" ma:displayName="חשיבות" ma:internalName="SDImportance">
+<xsd:simpleType>
+<xsd:restriction base="dms:Number"/>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDDocumentSource" ma:index="16" nillable="true" ma:displayName="מקור המסמך" ma:internalName="SDDocumentSource">
+<xsd:simpleType>
+<xsd:restriction base="dms:Choice">
+<xsd:enumeration value="SDFileUpload"/>
+<xsd:enumeration value="SDNewFile"/>
+<xsd:enumeration value="SDMultiFilesUpload"/>
+<xsd:enumeration value="OutlookExtender"/>
+<xsd:enumeration value="SDMigration"/>
+<xsd:enumeration value="OfficeAddIn"/>
+<xsd:enumeration value="ArchiveScan"/>
+<xsd:enumeration value="PCDocs"/>
+<xsd:enumeration value="PST"/>
+<xsd:enumeration value="D2K"/>
+<xsd:enumeration value="Menahel"/>
+<xsd:enumeration value="ShipmentLoader"/>
+<xsd:enumeration value="PoliceOffices"/>
+<xsd:enumeration value="AGATForms"/>
+<xsd:enumeration value="SDK"/>
+<xsd:enumeration value="Other"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDLastSigningDate" ma:index="17" nillable="true" ma:displayName="SDLastSigningDate" ma:internalName="SDLastSigningDate">
+<xsd:simpleType>
+<xsd:restriction base="dms:DateTime"/>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDNumOfSignatures" ma:index="18" nillable="true" ma:displayName="SDNumOfSignatures" ma:internalName="SDNumOfSignatures">
+<xsd:simpleType>
+<xsd:restriction base="dms:Number"/>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDSignersLogins" ma:index="19" nillable="true" ma:displayName="SDSignersLogins" ma:internalName="SDSignersLogins">
+<xsd:simpleType>
+<xsd:restriction base="dms:Text"/>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SDExternalEntityConnected" ma:index="20" nillable="true" ma:displayName="מקושר לאפליקציה חיצונית" ma:internalName="SDExternalEntityConnected">
+<xsd:simpleType>
+<xsd:restriction base="dms:Boolean"/>
+</xsd:simpleType>
+</xsd:element>
+</xsd:schema>
+<xsd:schema targetNamespace="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all" xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:odoc="http://schemas.microsoft.com/internal/obd">
+<xsd:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="http://dublincore.org/schemas/xmls/qdc/2003/04/02/dc.xsd"/>
+<xsd:import namespace="http://purl.org/dc/terms/" schemaLocation="http://dublincore.org/schemas/xmls/qdc/2003/04/02/dcterms.xsd"/>
+<xsd:element name="coreProperties" type="CT_coreProperties"/>
+<xsd:complexType name="CT_coreProperties">
+<xsd:all>
+<xsd:element ref="dc:creator" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="dcterms:created" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="dc:identifier" minOccurs="0" maxOccurs="1"/>
+<xsd:element name="contentType" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+<xsd:element ref="dc:title" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="dc:subject" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="dc:description" minOccurs="0" maxOccurs="1"/>
+<xsd:element name="keywords" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+<xsd:element ref="dc:language" minOccurs="0" maxOccurs="1"/>
+<xsd:element name="category" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+<xsd:element name="version" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+<xsd:element name="revision" minOccurs="0" maxOccurs="1" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>
+                        This value indicates the number of saves or revisions. The application is responsible for updating this value after each revision.
+                    </xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="lastModifiedBy" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+<xsd:element ref="dcterms:modified" minOccurs="0" maxOccurs="1"/>
+<xsd:element name="contentStatus" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+</xsd:all>
+</xsd:complexType>
+</xsd:schema>
+<xs:schema targetNamespace="http://schemas.microsoft.com/office/infopath/2007/PartnerControls" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:pc="http://schemas.microsoft.com/office/infopath/2007/PartnerControls" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="Person">
+<xs:complexType>
+<xs:sequence>
+<xs:element ref="pc:DisplayName" minOccurs="0"></xs:element>
+<xs:element ref="pc:AccountId" minOccurs="0"></xs:element>
+<xs:element ref="pc:AccountType" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="DisplayName" type="xs:string"></xs:element>
+<xs:element name="AccountId" type="xs:string"></xs:element>
+<xs:element name="AccountType" type="xs:string"></xs:element>
+<xs:element name="BDCAssociatedEntity">
+<xs:complexType>
+<xs:sequence>
+<xs:element ref="pc:BDCEntity" minOccurs="0" maxOccurs="unbounded"></xs:element>
+</xs:sequence>
+<xs:attribute ref="pc:EntityNamespace"></xs:attribute>
+<xs:attribute ref="pc:EntityName"></xs:attribute>
+<xs:attribute ref="pc:SystemInstanceName"></xs:attribute>
+<xs:attribute ref="pc:AssociationName"></xs:attribute>
+</xs:complexType>
+</xs:element>
+<xs:attribute name="EntityNamespace" type="xs:string"></xs:attribute>
+<xs:attribute name="EntityName" type="xs:string"></xs:attribute>
+<xs:attribute name="SystemInstanceName" type="xs:string"></xs:attribute>
+<xs:attribute name="AssociationName" type="xs:string"></xs:attribute>
+<xs:element name="BDCEntity">
+<xs:complexType>
+<xs:sequence>
+<xs:element ref="pc:EntityDisplayName" minOccurs="0"></xs:element>
+<xs:element ref="pc:EntityInstanceReference" minOccurs="0"></xs:element>
+<xs:element ref="pc:EntityId1" minOccurs="0"></xs:element>
+<xs:element ref="pc:EntityId2" minOccurs="0"></xs:element>
+<xs:element ref="pc:EntityId3" minOccurs="0"></xs:element>
+<xs:element ref="pc:EntityId4" minOccurs="0"></xs:element>
+<xs:element ref="pc:EntityId5" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="EntityDisplayName" type="xs:string"></xs:element>
+<xs:element name="EntityInstanceReference" type="xs:string"></xs:element>
+<xs:element name="EntityId1" type="xs:string"></xs:element>
+<xs:element name="EntityId2" type="xs:string"></xs:element>
+<xs:element name="EntityId3" type="xs:string"></xs:element>
+<xs:element name="EntityId4" type="xs:string"></xs:element>
+<xs:element name="EntityId5" type="xs:string"></xs:element>
+<xs:element name="Terms">
+<xs:complexType>
+<xs:sequence>
+<xs:element ref="pc:TermInfo" minOccurs="0" maxOccurs="unbounded"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="TermInfo">
+<xs:complexType>
+<xs:sequence>
+<xs:element ref="pc:TermName" minOccurs="0"></xs:element>
+<xs:element ref="pc:TermId" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="TermName" type="xs:string"></xs:element>
+<xs:element name="TermId" type="xs:string"></xs:element>
+</xs:schema>
+</ct:contentTypeSchema>
